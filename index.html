@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Con 7Speaking: Habla, Conecta y Crece.</title>
+  <meta name="description" content="En 7 Speaking, transformamos tu talento, hablamos tu idioma. Descubre una nueva forma de aprender idiomas que se adapta a tu ritmo y necesidades." />
+
+  <!-- Tipografías (mismo look & feel del original) -->
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;700&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+
+  <style>
+    :root{
+      /* Colores de marca tomados del diseño original */
+      --bg: #FFFCF5;           /* crema */
+      --ink: #2B4150;          /* texto */
+      --heading: #124E73;      /* títulos */
+      --accent: #325F7B;       /* botones / enlaces */
+      --accent-2: #4E6D82;     /* panel azul */
+      --badge: #E63B3F;        /* rojo 7Speaking */
+      --muted: #F2EFE8;        /* fondos sutiles */
+      --card: #FFFCF5;         /* tarjetas claras */
+      --border: #E5E0DF;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:"Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    h1,h2,h3{font-family:"MuseoModerno", system-ui, sans-serif; color:var(--heading); line-height:1.25; margin:0 0 .5rem 0}
+    h1{font-size:clamp(2rem, 4.4vw, 3.6rem)}
+    h2{font-size:clamp(1.6rem, 3vw, 2.2rem)}
+    h3{font-size:clamp(1.2rem, 2.4vw, 1.4rem)}
+    p{margin:.4rem 0}
+    .wrap{width:min(1120px, 92%); margin-inline:auto}
+
+    /* Botones */
+    .btn{appearance:none; border:0; border-radius:.6rem; padding:.85rem 1.2rem; font-weight:700; cursor:pointer; display:inline-block; text-decoration:none}
+    .btn.primary{background:var(--accent); color:#fff}
+    .btn.outline{background:transparent; color:var(--accent); border:2px solid var(--accent)}
+    .btn + .btn{margin-left:.8rem}
+
+    /* ===== HERO ===== */
+    header.hero{padding-top: 10px; padding-bottom: 10px;}
+    .hero-grid{display:grid; grid-template-columns:1.06fr .94fr; gap:clamp(16px, 4vw, 48px); align-items:center}
+    .brand-badge{background:var(--badge); color:#fff; padding:.15em .45em; border-radius:.5rem; display:inline-block}
+    .lead{font-weight:800; margin:.4rem 0}
+    .cta{margin-top:.8rem}
+    .hero-figure{align-self: end;}
+    .hero-figure img{width:100%; max-width:520px; height:auto; object-fit:contain; display:block}
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .hero-figure{justify-content:center}
+      .hero-figure img{max-width:360px}
+    }
+
+    /* ===== Impacto ===== */
+    .impact{background:var(--accent-2); color:#fff; padding:44px 0}
+    .card{background:var(--card); color:var(--ink); border:1px solid var(--border); border-radius:1rem; padding:clamp(18px,3vw,28px); box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(12px,2vw,20px); margin-top:.6rem}
+    .kpi{font-size:clamp(1.8rem,3.2vw,2.4rem); font-weight:800; margin:.25rem 0}
+    .kpi-title{font-weight:800; color:var(--heading); margin-bottom:.35rem}
+    @media (max-width: 900px){ .kpis{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 560px){ .kpis{grid-template-columns:1fr} }
+
+    /* ===== Transforma tu enfoque lingüístico ===== */
+    .section{padding:44px 0}
+    .section.muted{background:#faf6ee}
+    .intro{max-width:950px}
+    .ribbon{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:22px 0}
+    .ribbon > div{background:#EFE9DF; height:64px; position:relative; display:flex; align-items:center; justify-content:center; color:var(--heading); font-size:24px;}
+    .ribbon > div::after{content:""; position:absolute; right:-24px; top:0; bottom:0; width:24px; background:#EFE9DF; clip-path:polygon(0 0, 100% 50%, 0 100%)}
+    .ribbon > div:last-child::after{display:none}
+    .features{display:grid; grid-template-columns:repeat(3,1fr); gap:24px}
+    .features h3{margin-top:.2rem}
+    @media (max-width: 900px){ .features{grid-template-columns:1fr} .ribbon{grid-template-columns:1fr} .ribbon > div::after{display:none} }
+
+    /* ===== Aprende a tu propio ritmo ===== */
+    .big-card{background:var(--muted); padding:28px; border-radius:10px; border:1px solid var(--border)}
+
+    /* ===== Ventajas ===== */
+    .columns-3{display:grid; grid-template-columns:repeat(3,1fr); gap:24px}
+    .tile{background:#F4EEE4; border:1px solid var(--border); border-radius:8px; padding:18px}
+    @media (max-width: 900px){ .columns-3{grid-template-columns:1fr} }
+
+    /* ===== Franja azul texto ===== */
+    .band{background:var(--accent-2); color:#fff; padding:44px 0}
+    .band p{max-width:900px}
+
+    /* ===== Misión (con watermark) ===== */
+    .mission{position:relative}
+    .mission .watermark{position:absolute; inset:10% 0 0 0; opacity:.12; pointer-events:none; background:radial-gradient(circle at 50% 50%, #000 0, #000 18%, transparent 18.5%), radial-gradient(circle at 50% 50%, #000 0, #000 28%, transparent 28.5%); -webkit-mask:radial-gradient(circle at center, #000 55%, transparent 56%); mask:radial-gradient(circle at center, #000 55%, transparent 56%)}
+    .mission-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start}
+    @media (max-width: 880px){ .mission-grid{grid-template-columns:1fr} }
+
+    /* ===== Testimonios ===== */
+    .quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+    .quote{background:#fff; border:1px solid var(--border); border-radius:6px; padding:18px; position:relative}
+    .quote::before{content:"\201C"; font-size:42px; color:var(--accent); position:absolute; left:10px; top:0}
+    .quote::after{content:"\201D"; font-size:42px; color:var(--accent); position:absolute; right:10px; bottom:-8px}
+    .quote small{display:block; margin-top:10px; font-weight:700}
+    @media (max-width: 900px){ .quotes{grid-template-columns:1fr} }
+
+    /* ===== Flags / CTA final ===== */
+	.flags { display:flex; gap:22px; align-items:center; flex-wrap:wrap; }
+	.flag { width:56px; height:auto; border-radius:4px; box-shadow:0 0 0 1px #E5E0DF inset; }
+	@media (max-width:480px){ .flag { width:40px; } }
+    /* .flags{display:flex; gap:22px; font-size:54px; line-height:1; align-items:center; flex-wrap:wrap} */
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap}
+
+    footer{padding:40px 0; color:#6d7b86; font-size:.95rem}
+  </style>
+</head>
+<body>
+  
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>Con <span class="brand-badge">7Speaking</span>: Habla, Conecta y Crece.</h1>
+        <p class="lead">En 7 Speaking, transformamos tu talento, hablamos tu idioma.</p>
+        <p>Descubre una nueva forma de aprender idiomas que se adapta a tu ritmo y necesidades.</p>
+        <div class="cta">
+          <a href="https://forms.7speaking.com/contact" class="btn primary">Contacta con nuestros expertos</a>
+          <a href="https://forms.7speaking.com/contact" class="btn outline">Solicita una demostración</a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <img src="assets/img/two_girls.png" alt="Estudiantes 7Speaking" />
+      </figure>
+    </div>
+  </header>
+
+  <!-- ================= IMPACTO ================= -->
+  <section class="impact">
+    <div class="wrap">
+      <div class="card">
+        <h2>Impacto de la plataforma a nivel global</h2>
+        <div class="kpis">
+          <div>
+            <div class="kpi">+2000</div>
+            <div class="kpi-title">Empresas</div>
+            <p>Han elegido 7Speaking para la formación de sus equipos.</p>
+          </div>
+          <div>
+            <div class="kpi">+500k</div>
+            <div class="kpi-title">Alumnos</div>
+            <p>Formados con éxito en múltiples idiomas.</p>
+          </div>
+          <div>
+            <div class="kpi">+82k</div>
+            <div class="kpi-title">Cursos</div>
+            <p>Impartidos anualmente con metodología innovadora.</p>
+          </div>
+          <div>
+            <div class="kpi">97,8%</div>
+            <div class="kpi-title">Satisfacción</div>
+            <p>De los alumnos con nuestros programas formativos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRANSFORMA TU ENFOQUE ================= -->
+  <section class="section">
+    <div class="wrap">
+      <h2>Transforma tu enfoque lingüístico</h2>
+      <p class="intro">Con 7Speaking, puedes reinventar la forma de capacitarte en idiomas extranjeros. Nuestra innovadora solución permite crear programas de formación a medida, perfectamente adaptados a tus necesidades específicas como estudiante universitario o profesional.</p>
+
+      <div class="ribbon" aria-hidden="true">
+        <div>⌁</div>
+        <div>☊</div>
+        <div>🚀</div>
+      </div>
+
+      <div class="features">
+        <div>
+          <h3>Identifica competencias</h3>
+          <p>Nuestra tecnología basada en <strong>INTELIGENCIA ARTIFICIAL</strong>, facilita el establecimiento de objetivos personalizados y el seguimiento de progresos en tiempo real, alineando tu desarrollo académico con tus metas profesionales.</p>
+        </div>
+        <div>
+          <h3>Temas y noticias por sector</h3>
+          <p>Con módulos interactivos, vídeos, pruebas y juegos, nuestra plataforma te involucra en un viaje de aprendizaje dinámico y eficaz, reforzando tus conocimientos lingüísticos diariamente.</p>
+        </div>
+        <div>
+          <h3>Acelera tu aprendizaje</h3>
+          <p>Para abordar competencias específicas o necesidades urgentes, las sesiones personalizadas ofrecen una oportunidad única para la práctica intensiva y la mejora rápida de tus habilidades lingüísticas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= APRENDE A TU RITMO ================= -->
+  <section class="section muted">
+    <div class="wrap">
+      <div class="big-card">
+        <h2>Aprende a tu propio ritmo</h2>
+        <p>Nuestra intuitiva plataforma hace que el aprendizaje de idiomas forme parte de tu vida cotidiana, permitiéndote estudiar cuando y donde quieras. Ideal para estudiantes universitarios con horarios exigentes y múltiples responsabilidades.</p>
+        <p>La flexibilidad es clave en el mundo académico actual. Por eso, 7Speaking se adapta a tus necesidades, ofreciéndote una experiencia de aprendizaje personalizada que se integra perfectamente en tu rutina diaria.</p>
+        <a class="btn primary" href="#demo">Solicita una demostración</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VENTAJAS ================= -->
+  <section class="section">
+    <div class="wrap">
+      <h2>Ventajas de nuestra metodología</h2>
+      <div class="columns-3" style="margin-top:18px">
+        <div class="tile">
+          <h3>Enfoque individualizado</h3>
+          <p>7Speaking ofrece programas de formación lingüística personalizados, adaptados a las necesidades específicas de cada estudiante universitario u organización académica.</p>
+        </div>
+        <div class="tile">
+          <h3>Compromiso dinámico</h3>
+          <p>Transformamos el aprendizaje de idiomas en una experiencia atractiva y motivadora, con elementos de gamificación que promueven una mejor retención de los conocimientos.</p>
+        </div>
+        <div class="tile">
+          <h3>Evaluación y análisis</h3>
+          <p>Proporcionamos herramientas avanzadas para supervisar y analizar tu progreso en tiempo real, permitiéndote identificar áreas de mejora y celebrar tus logros.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FRANJA AZUL TEXTO ================= -->
+  <section class="band">
+    <div class="wrap">
+      <p>En 7Speaking, nuestra ambición va más allá de la enseñanza tradicional: estamos revolucionando el aprendizaje con innovaciones pedagógicas y tecnológicas como el aprendizaje colaborativo, el e-CLIL, la ludificación y el aprendizaje adaptativo.</p>
+      <p>Desde el inicio de tu curso, realizarás un análisis de tus necesidades y una prueba de nivel adaptativa, que nos permite crear un programa a medida, eficaz y atractivo. Esta metodología es especialmente efectiva para estudiantes universitarios que buscan mejorar sus habilidades lingüísticas para su futuro profesional.</p>
+    </div>
+  </section>
+
+  <!-- ================= CONTROL TOTAL ================= -->
+  <section class="section">
+    <div class="wrap">
+      <h2>Control total de tu formación</h2>
+      <p>Con nuestra plataforma MILA®, tanto estudiantes como instituciones educativas disponen de una potente herramienta para gestionar las necesidades de formación y realizar un seguimiento detallado del progreso.</p>
+      <p>MILA® te permite personalizar los cursos y realizar un seguimiento detallado de los resultados, garantizando competencias lingüísticas y culturales optimizadas y perfectamente adaptadas a tus necesidades académicas y profesionales. Una herramienta ideal para universidades que buscan ofrecer formación lingüística de calidad a sus estudiantes.</p>
+    </div>
+  </section>
+
+  <!-- ================= MISIÓN ================= -->
+  <section class="section muted mission">
+    <div class="watermark" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2>Nuestra misión: Acelerar tu éxito</h2>
+      <div class="mission-grid" style="margin-top:18px">
+        <div>
+          <h3>Formación continua</h3>
+          <p>Ofrecemos recursos actualizados constantemente para mantener el interés y la motivación de los estudiantes universitarios en su aprendizaje de idiomas.</p>
+          <h3 style="margin-top:22px">Comunicación multilingüe</h3>
+          <p>Facilitamos la adquisición de habilidades comunicativas en múltiples idiomas, esenciales para el desarrollo académico y profesional en el siglo XXI.</p>
+        </div>
+        <div>
+          <h3>Desarrollo internacional</h3>
+          <p>Preparamos a los estudiantes para un mundo globalizado, dotándoles de las herramientas lingüísticas necesarias para destacar en entornos internacionales.</p>
+        </div>
+      </div>
+      <p style="margin-top:22px">En 7Speaking creemos que el dominio de idiomas es fundamental para el éxito académico y profesional de los estudiantes universitarios en un mundo cada vez más conectado.</p>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIOS ================= -->
+  <section class="section">
+    <div class="wrap">
+      <h2>Testimonios de nuestros usuarios</h2>
+      <div class="quotes" style="margin-top:16px">
+        <blockquote class="quote">
+          <p>"Al principio era muy escéptico, porque sólo hacíamos formación presencial y pasar al aprendizaje digital me daba miedo. Pero hemos recibido muy buenas opiniones de nuestros alumnos. Como Responsable de Formación, contamos con el apoyo de su servicio de atención al cliente. Estoy muy satisfecho."</p>
+          <small>Jeanne – Responsable de formación</small>
+        </blockquote>
+        <blockquote class="quote">
+          <p>"Utilicé mis créditos CPF para acceder a un curso de inglés para principiantes con 7Speaking. Me gustaron mucho las lecciones en vídeo y las clases individuales. Durante las clases, me di cuenta de que los profesores me escuchaban y mi nivel de inglés mejoró considerablemente gracias al curso."</p>
+          <small>Jacques – Responsable de logística</small>
+        </blockquote>
+        <blockquote class="quote">
+          <p>"Estoy encantada con mi experiencia con la plataforma 7Speaking. Me ha encantado poder aprender inglés a través de artículos relacionados con las noticias. Cada semana suben nuevos artículos, así que hay para todos los gustos. Además, su servicio de atención al cliente me ha parecido muy atento y eficaz."</p>
+          <small>Victoire – Gestor de clientes</small>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONFÍAN EN NOSOTROS ================= -->
+  <section class="section">
+    <div class="wrap">
+		<h2>Idiomas destacados en 7Speaking</h2>
+			<div class="flags" aria-label="Idiomas destacados">
+				<img class="flag" src="assets/img/flags/us.svg" alt="Estados Unidos (inglés)" loading="lazy">
+				<img class="flag" src="assets/img/flags/fr.svg" alt="Francia (francés)" loading="lazy">
+				<img class="flag" src="assets/img/flags/it.svg" alt="Italia (italiano)" loading="lazy">
+				<img class="flag" src="assets/img/flags/es.svg" alt="España (español)" loading="lazy">
+				<img class="flag" src="assets/img/flags/de.svg" alt="Alemania (alemán)" loading="lazy">
+			</div>
+
+      <h2 style="margin-top:28px">Descubre nuestros programas de formación personalizados para estudiantes universitarios</h2>
+      <p>Únete a las miles de instituciones educativas y estudiantes que ya han transformado su aprendizaje de idiomas con 7Speaking. Nuestros programas están diseñados para adaptarse a las necesidades específicas de los jóvenes universitarios, proporcionándoles las herramientas lingüísticas necesarias para destacar en un mundo globalizado.</p>
+
+      <div class="cta-row" style="margin-top:12px">
+        <a class="btn outline" href="https://forms.7speaking.com/contact">Prueba 7Speaking</a>
+        <a class="btn primary" href="https://forms.7speaking.com/contact">Contacta con nosotros</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© <span id="y"></span> 7Speaking. Todos los derechos reservados.</div>
+  </footer>
+
+  <script>
+    // Año del footer
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
