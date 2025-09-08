@@ -429,7 +429,7 @@
     const sendBtn = document.getElementById('sendBtn');
     const btnText = sendBtn.querySelector('.btn-text');
 
-    function setBusy(on){
+    function setBusy(on){ // activa/desactiva estado "Enviando..."
       if (on){
         sendBtn.disabled = true;
         sendBtn.classList.add('loading');        // muestra spinner
