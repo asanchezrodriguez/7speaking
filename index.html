@@ -109,13 +109,54 @@
     @media (max-width: 900px){ .quotes{grid-template-columns:1fr} }
 
     /* ===== Flags / CTA final ===== */
-	.flags { display:flex; gap:22px; align-items:center; flex-wrap:wrap; }
-	.flag { width:56px; height:auto; border-radius:4px; box-shadow:0 0 0 1px #E5E0DF inset; }
-	@media (max-width:480px){ .flag { width:40px; } }
-    /* .flags{display:flex; gap:22px; font-size:54px; line-height:1; align-items:center; flex-wrap:wrap} */
+    .flags { display:flex; gap:22px; align-items:center; flex-wrap:wrap; }
+    .flag { width:56px; height:auto; border-radius:4px; box-shadow:0 0 0 1px #E5E0DF inset; }
+    @media (max-width:480px){ .flag { width:40px; } }
     .cta-row{display:flex; gap:12px; flex-wrap:wrap}
 
     footer{padding:40px 0; color:#6d7b86; font-size:.95rem}
+
+    /* ===== Modal de contacto ===== */
+    .modal{position:fixed; inset:0; display:none; place-items:center; z-index:1000}
+    .modal.open{display:grid}
+    .modal__backdrop{position:absolute; inset:0; background:rgba(0,0,0,.35); backdrop-filter:saturate(120%) blur(2px);}
+    .modal__dialog{
+      position:relative; width:min(680px, 92%); background:var(--card, #FFFCF5);
+      border:1px solid var(--border, #E5E0DF); border-radius:16px; padding:22px;
+      box-shadow:0 10px 30px rgba(0,0,0,.20); animation:pop .15s ease-out;
+    }
+    @keyframes pop{from{transform:translateY(6px); opacity:.8} to{transform:none; opacity:1}}
+    .modal__title{font-family:"MuseoModerno",system-ui,sans-serif; color:var(--heading,#124E73); margin:0 0 10px}
+    .modal__close{
+      position:absolute; right:10px; top:6px; width:36px; height:36px;
+      border-radius:8px; border:0; background:transparent; font-size:24px; cursor:pointer; color:#556;
+    }
+    .modal__form label{display:block; margin:10px 0}
+    .modal__form span{display:block; font-weight:700; margin-bottom:6px; color:var(--heading,#124E73)}
+    .modal__form input, .modal__form textarea{
+      width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border,#E5E0DF);
+      background:#fff; color:var(--ink,#2B4150); font:inherit;
+    }
+    .modal__form input:focus, .modal__form textarea:focus{
+      outline:2px solid var(--accent,#325F7B); outline-offset:1px;
+    }
+    .modal__form .grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px}
+    @media (max-width:800px){ .modal__form .grid{grid-template-columns:1fr} }
+
+    .btn{position:relative}
+    .btn-spinner{
+      display:none; width:16px; height:16px; border-radius:50%; border:2px solid #fff; border-top-color:transparent;
+      margin-left:8px; vertical-align:middle; animation:spin .8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    btn .btn-spinner{ display:none !important; visibility:hidden; }
+    .btn.loading .btn-spinner{ display:inline-block !important; visibility:visible; }
+    .btn.loading .btn-text{ opacity:.6; }
+    .btn[disabled]{ opacity:.75; cursor:not-allowed; }
+
+    .form-msg{margin:10px 0 0}
+    .form-msg.ok{color:#1b7f4b; font-weight:700}
+    .form-msg.err{color:#b33; font-weight:700}
   </style>
 </head>
 <body>
@@ -128,8 +169,8 @@
         <p class="lead">En 7 Speaking, transformamos tu talento, hablamos tu idioma.</p>
         <p>Descubre una nueva forma de aprender idiomas que se adapta a tu ritmo y necesidades.</p>
         <div class="cta">
-          <a href="https://forms.7speaking.com/contact" class="btn primary">Contacta con nuestros expertos</a>
-          <a href="https://forms.7speaking.com/contact" class="btn outline">Solicita una demostración</a>
+          <a href="#" class="btn primary js-open-contact">Contacta con nuestros expertos</a>
+          <a href="#" class="btn outline js-open-contact">Solicita una demostración</a>
         </div>
       </div>
       <figure class="hero-figure">
@@ -205,7 +246,7 @@
         <h2>Aprende a tu propio ritmo</h2>
         <p>Nuestra intuitiva plataforma hace que el aprendizaje de idiomas forme parte de tu vida cotidiana, permitiéndote estudiar cuando y donde quieras. Ideal para estudiantes universitarios con horarios exigentes y múltiples responsabilidades.</p>
         <p>La flexibilidad es clave en el mundo académico actual. Por eso, 7Speaking se adapta a tus necesidades, ofreciéndote una experiencia de aprendizaje personalizada que se integra perfectamente en tu rutina diaria.</p>
-        <a class="btn primary" href="#demo">Solicita una demostración</a>
+        <a class="btn primary js-open-contact" href="#">Solicita una demostración</a>
       </div>
     </div>
   </section>
@@ -293,21 +334,21 @@
   <!-- ================= CONFÍAN EN NOSOTROS ================= -->
   <section class="section">
     <div class="wrap">
-		<h2>Idiomas destacados en 7Speaking</h2>
-			<div class="flags" aria-label="Idiomas destacados">
-				<img class="flag" src="assets/img/flags/us.svg" alt="Estados Unidos (inglés)" loading="lazy">
-				<img class="flag" src="assets/img/flags/fr.svg" alt="Francia (francés)" loading="lazy">
-				<img class="flag" src="assets/img/flags/it.svg" alt="Italia (italiano)" loading="lazy">
-				<img class="flag" src="assets/img/flags/es.svg" alt="España (español)" loading="lazy">
-				<img class="flag" src="assets/img/flags/de.svg" alt="Alemania (alemán)" loading="lazy">
-			</div>
+      <h2>Idiomas destacados en 7Speaking</h2>
+      <div class="flags" aria-label="Idiomas destacados">
+        <img class="flag" src="assets/img/flags/us.svg" alt="Estados Unidos (inglés)" loading="lazy">
+        <img class="flag" src="assets/img/flags/fr.svg" alt="Francia (francés)" loading="lazy">
+        <img class="flag" src="assets/img/flags/it.svg" alt="Italia (italiano)" loading="lazy">
+        <img class="flag" src="assets/img/flags/es.svg" alt="España (español)" loading="lazy">
+        <img class="flag" src="assets/img/flags/de.svg" alt="Alemania (alemán)" loading="lazy">
+      </div>
 
       <h2 style="margin-top:28px">Descubre nuestros programas de formación personalizados para estudiantes universitarios</h2>
       <p>Únete a las miles de instituciones educativas y estudiantes que ya han transformado su aprendizaje de idiomas con 7Speaking. Nuestros programas están diseñados para adaptarse a las necesidades específicas de los jóvenes universitarios, proporcionándoles las herramientas lingüísticas necesarias para destacar en un mundo globalizado.</p>
 
       <div class="cta-row" style="margin-top:12px">
-        <a class="btn outline" href="https://forms.7speaking.com/contact">Prueba 7Speaking</a>
-        <a class="btn primary" href="https://forms.7speaking.com/contact">Contacta con nosotros</a>
+        <a class="btn outline" href="#" onclick="document.querySelector('.js-open-contact').click()">Prueba 7Speaking</a>
+        <a class="btn primary js-open-contact" href="#">Contacta con nosotros</a>
       </div>
     </div>
   </section>
@@ -316,9 +357,145 @@
     <div class="wrap">© <span id="y"></span> 7Speaking. Todos los derechos reservados.</div>
   </footer>
 
+  <!-- ================= MODAL DE CONTACTO ================= -->
+  <div class="modal" id="contact-modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+      <button class="modal__close" type="button" data-close aria-label="Cerrar">×</button>
+      <h3 id="contactTitle" class="modal__title">Hablemos</h3>
+
+      <form id="contactForm" class="modal__form" novalidate>
+        <div class="grid">
+          <label>
+            <span>Nombre*</span>
+            <input type="text" name="nombre" required placeholder="Tu nombre">
+          </label>
+          <label>
+            <span>Email*</span>
+            <input type="email" name="email" required placeholder="tu@correo.com">
+          </label>
+          <label>
+            <span>Teléfono</span>
+            <input type="tel" name="telefono" placeholder="+593 ...">
+          </label>
+        </div>
+
+        <label>
+          <span>Mensaje*</span>
+          <textarea name="mensaje" rows="4" required placeholder="¿En qué te ayudamos?"></textarea>
+        </label>
+
+        <!-- Campo oculto (fuente=web) -->
+        <input type="hidden" name="fuente" value="web">
+
+        <!-- Honeypot anti-spam (no tocar) -->
+        <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0">
+
+        <button class="btn primary" type="submit" id="sendBtn">
+          <span class="btn-text">Enviar</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+
+        <p class="form-msg ok" id="formOk" hidden>¡Gracias! Te contactaremos pronto.</p>
+        <p class="form-msg err" id="formErr" hidden>Ups, no pudimos enviar. Inténtalo de nuevo.</p>
+      </form>
+    </div>
+  </div>
+
   <script>
     // Año del footer
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // —— URL de tu Apps Script (la que me pasaste)
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3fAOS-V-ADhadR1pAyxkAHKp_uDdbF8oiBm20wCSyL3UccozpYiyJ1KkMVMY_83Eu/exec';
+
+    // Abrir / cerrar modal (igual que antes)
+    const modal  = document.getElementById('contact-modal');
+    document.querySelectorAll('.js-open-contact')
+      .forEach(btn => btn.addEventListener('click', e => { e.preventDefault(); modal.classList.add('open'); }));
+    document.querySelectorAll('[data-close]')
+      .forEach(el => el.addEventListener('click', () => modal.classList.remove('open')));
+
+    // Utils
+    function getUTM(){
+      const u = new URL(location.href), p = u.searchParams;
+      return { url: u.href, utm_source: p.get('utm_source') || '', utm_medium: p.get('utm_medium') || '', utm_campaign: p.get('utm_campaign') || '' };
+    }
+
+    // --- Submit handler con control de estados ---
+    const form    = document.getElementById('contactForm');
+    const okMsg   = document.getElementById('formOk');
+    const errMsg  = document.getElementById('formErr');
+    const sendBtn = document.getElementById('sendBtn');
+    const btnText = sendBtn.querySelector('.btn-text');
+
+    // Estado limpio al cargar
+    window.addEventListener('DOMContentLoaded', () => {
+      const sendBtn = document.getElementById('sendBtn');
+      sendBtn?.classList.remove('loading');
+      sendBtn?.removeAttribute('disabled');
+    });
+
+    function setBusy(on){
+      if (on){
+        sendBtn.disabled = true;
+        sendBtn.classList.add('loading');        // muestra spinner
+        btnText.textContent = 'Enviando...';
+      } else {
+        sendBtn.disabled = false;
+        sendBtn.classList.remove('loading');     // oculta spinner SÍ o SÍ
+        btnText.textContent = 'Enviar';
+      }
+    }
+    function showSuccess(){
+      sendBtn.classList.remove('loading');
+      btnText.textContent = 'Enviado ✓';
+      okMsg.hidden  = false;
+      errMsg.hidden = true;
+      // Cierra y resetea luego de 1.2s
+      setTimeout(() => {
+        modal.classList.remove('open');
+        form.reset();
+        setBusy(false);                          // vuelve a "Enviar"
+      }, 1200);
+    }
+    function showError(){
+      errMsg.hidden = false;
+      okMsg.hidden  = true;
+      setBusy(false);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      okMsg.hidden = true; errMsg.hidden = true;
+
+      // honeypot
+      if (form.company && form.company.value) return;
+      if (!form.reportValidity()) return;
+
+      // payload como FormData (evita preflight)
+      const fd = new FormData(form);
+      const extra = getUTM();
+      fd.set('fuente', 'web');
+      fd.set('url', extra.url);
+      fd.set('utm_source', extra.utm_source);
+      fd.set('utm_medium', extra.utm_medium);
+      fd.set('utm_campaign', extra.utm_campaign);
+      fd.set('user_agent', navigator.userAgent);
+
+      setBusy(true);
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: fd,
+          mode: 'no-cors'    // entrega a Apps Script sin CORS
+        });
+        // No podemos leer respuesta (opaque), pero el POST se envía.
+        showSuccess();
+      } catch (err) {
+        showError();
+      }
+    });
   </script>
 </body>
 </html>
