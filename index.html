@@ -70,6 +70,60 @@
     @media (max-width: 900px){ .kpis{grid-template-columns:repeat(2,1fr)} }
     @media (max-width: 560px){ .kpis{grid-template-columns:1fr} }
 
+    /* ==== Carrusel de clientes (estilo chip) ==== */
+    .clients{ background: var(--bg); padding: 18px 0 36px; }
+    .clients h3{ margin: 0 0 12px; color: var(--heading); font-size: clamp(1.1rem,2.2vw,1.4rem); }
+
+    .client-carousel{ position: relative; overflow: hidden; }
+    .client-track{
+      --speed: 26s;                        /* ajusta la velocidad (menor = más rápido) */
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      animation: clients-scroll var(--speed) linear infinite;
+      will-change: transform;
+      /* por si acaso: */
+      flex-wrap: nowrap;
+    }
+
+    .client-badge{
+      height: 96px;           /* antes: 64px */
+      padding: 18px 32px;     /* más aire alrededor del logo */
+    }
+
+    .client-badge img{
+      height: 56px;           /* antes: 28px */
+      max-width: 200px;       /* evita que logos muy anchos se salgan */
+      width: auto;
+    }
+
+    .client-badge:hover{
+      transform: translateY(-2px);
+    }
+    .client-badge:hover img{
+      filter: none; opacity: 1;
+    }
+
+    /* degradados sutiles en los bordes, como en la referencia */
+    .client-carousel::before,
+    .client-carousel::after{
+      content:""; position:absolute; top:0; bottom:0; width:48px; pointer-events:none;
+      background: linear-gradient(to right, var(--bg), transparent);
+      z-index: 1;
+    }
+    .client-carousel::after{ right:0; transform: rotate(180deg); }
+    .client-carousel::before{ left:0; }
+
+    @keyframes clients-scroll{
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }  /* porque duplicamos el lote */
+    }
+
+    @media (max-width: 600px){
+      .client-badge{ height: 84px; padding: 16px 24px; }
+      .client-badge img{ height: 48px; max-width: 160px; }
+    }
+
     /* ===== Transforma tu enfoque lingüístico ===== */
     .section{padding:44px 0}
     .section.muted{background:#faf6ee}
@@ -205,6 +259,69 @@
             <div class="kpi-title">Satisfacción</div>
             <p>De los alumnos con nuestros programas formativos.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLIENTES / LOGOS ===== -->
+  <section class="clients" aria-label="Universidades que confían en 7Speaking">
+    <div class="wrap">
+      <h3>Empresas y universidades que confían en nosotros</h3>
+
+      <div class="client-carousel">
+        <div class="client-track">
+          <!-- Lote A -->
+          <a class="client-badge" href="#" aria-label="BNP Paribas">
+            <img src="assets/img/clients/bnp-paribas.png" alt="BNP Paribas">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Corporación Universitaria Reformada - Barranquilla">
+            <img src="assets/img/clients/unireformada.png" alt="Unireformada Barranquilla">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Deloitte">
+            <img src="assets/img/clients/deloitte.png" alt="Deloitte">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Universidad Católica de Costa Rica">
+            <img src="assets/img/clients/ucatolica-cr.png" alt="Universidad Católica de Costa Rica">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Wonder School">
+            <img src="assets/img/clients/wonderschool.png" alt="Wonder School">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Amazon">
+            <img src="assets/img/clients/amazon.png" alt="Amazon">
+          </a>
+
+          <!-- (opcional) cuando tengas más logos, añádelos aquí ↑ y también en el duplicado ↓ -->
+
+          <!-- Lote B: duplicado para loop infinito perfecto -->
+          <a class="client-badge" href="#" aria-label="BNP Paribas">
+            <img src="assets/img/clients/bnp-paribas.png" alt="BNP Paribas">
+          </a>
+          
+          <a class="client-badge" href="#" aria-label="Corporación Universitaria Reformada - Barranquilla (duplicado)">
+            <img src="assets/img/clients/unireformada.png" alt="Unireformada Barranquilla">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Deloitte">
+            <img src="assets/img/clients/deloitte.png" alt="Deloitte">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Universidad Católica de Costa Rica (duplicado)">
+            <img src="assets/img/clients/ucatolica-cr.png" alt="Universidad Católica de Costa Rica">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Wonder School">
+            <img src="assets/img/clients/wonderschool.png" alt="Wonder School">
+          </a>
+
+          <a class="client-badge" href="#" aria-label="Amazon">
+            <img src="assets/img/clients/amazon.png" alt="Amazon">
+          </a>
         </div>
       </div>
     </div>
@@ -356,7 +473,7 @@
   </section>
 
   <footer>
-    <div class="wrap">© <span id="y"></span> 7Speaking. Todos los derechos reservados.</div>
+    <div class="wrap">© <span id="y"></span> 7speaking.lat Todos los derechos reservados.</div>
   </footer>
 
   <!-- ================= MODAL DE CONTACTO ================= -->
