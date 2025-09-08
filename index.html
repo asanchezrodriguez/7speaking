@@ -47,19 +47,56 @@
     .btn.outline{background:transparent; color:var(--accent); border:2px solid var(--accent)}
     .btn + .btn{margin-left:.8rem}
 
-    /* ===== HERO ===== */
-    header.hero{padding-top: 10px; padding-bottom: 10px;}
-    .hero-grid{display:grid; grid-template-columns:1.06fr .94fr; gap:clamp(16px, 4vw, 48px); align-items:center}
-    .brand-badge{background:var(--badge); color:#fff; padding:.15em .45em; border-radius:.5rem; display:inline-block}
-    .lead{font-weight:800; margin:.4rem 0}
-    .cta{margin-top:.8rem}
-    .hero-figure{align-self: end;}
-    .hero-figure img{width:100%; max-width:520px; height:auto; object-fit:contain; display:block}
-    @media (max-width: 900px){
-      .hero-grid{grid-template-columns:1fr}
-      .hero-figure{justify-content:center}
-      .hero-figure img{max-width:360px}
+    /* ====== HERO SLIDER: apilar slides y evitar que se “monten” ====== */
+    header.hero{ padding-block: clamp(1px,2.2vw,1px) 0; }
+
+    /* El contenedor controla el alto; los slides van apilados encima */
+    .hero-slider{
+      position: relative;
+      overflow: hidden;
+      min-height: clamp(480px, 72vh, 680px); /* alto visual del hero */
     }
+
+    /* Cada slide ocupa el mismo “marco” */
+    .hero-slider .slide{
+      position: absolute; inset: 0;
+      display: flex; align-items: center;
+      opacity: 0; visibility: hidden;
+      transform: translateX(2%);
+      transition: opacity .5s ease, transform .5s ease, visibility 0s .5s;
+    }
+    .hero-slider .slide.is-active{
+      opacity: 1; visibility: visible; transform: none; transition: opacity .5s, transform .5s;
+    }
+
+    /* Re-asegura la grilla interna del hero */
+    .hero-grid{
+      width:min(1120px,92%); margin-inline:auto;
+      display:grid; grid-template-columns:1.06fr .94fr;
+      gap:clamp(16px,4vw,48px); align-items:center;
+    }
+    .hero-figure{ align-self:end; display:flex; justify-content:flex-end; }
+    .hero-figure img{ width:100%; max-width:560px; height:auto; object-fit:contain; display:block; }
+
+    /* Controles arriba de todo */
+    .hero-arrow{ z-index: 2; }
+
+    .hero-dots{
+      position:absolute; left:50%; bottom:8px; transform:translateX(-50%);
+      display:flex; gap:8px; z-index:2;
+    }
+
+    /* Responsive: en móvil dejamos los slides en flujo normal */
+    @media (max-width: 900px){
+      .hero-slider{ min-height: auto; }
+      .hero-slider .slide{ position: relative; }
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-figure{ justify-content: center; }
+      .hero-figure img{ max-width: 380px; }
+      .hero-arrow{ display: none; }
+    }
+
+    .hero-arrow{ display:none !important; }
 
     /* ===== Impacto ===== */
     .impact{background:var(--accent-2); color:#fff; padding:44px 0}
@@ -211,27 +248,75 @@
     .form-msg{margin:10px 0 0}
     .form-msg.ok{color:#1b7f4b; font-weight:700}
     .form-msg.err{color:#b33; font-weight:700}
+
+    :root{
+      /* rojo del badge (parecido al de la polera) */
+      --badge: #E63B3F;
+    }
+
+    /* Chapita roja del 7Speaking */
+    .brand-badge{
+      display:inline-block;
+      background: var(--badge);
+      color:#fff;
+      padding: .08em .38em .14em;    /* alto cómodo con H1 grande */
+      border-radius: .6rem;
+      line-height: 1;                 /* que no “estire” el renglón */
+      white-space: nowrap;            /* no se parte en dos líneas */
+      box-shadow: 0 2px 0 rgba(0,0,0,.06);
+    }
+
+    /* pequeño ajuste visual dentro del H1 */
+    h1 .brand-badge{ margin: 0 .08em; }
   </style>
 </head>
 <body>
   
-  <!-- ================= HERO ================= -->
-  <header class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <h1>Con <span class="brand-badge">7Speaking</span>: Habla, Conecta y Crece.</h1>
-        <p class="lead">En 7 Speaking, transformamos tu talento, hablamos tu idioma.</p>
-        <p>Descubre una nueva forma de aprender idiomas que se adapta a tu ritmo y necesidades.</p>
-        <div class="cta">
-          <a href="#" class="btn primary js-open-contact">Contacta con nuestros expertos</a>
-          <a href="#" class="btn outline js-open-contact">Solicita una demostración</a>
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero-slider" id="heroSlider" aria-label="Mensajes destacados">
+    <!-- Slide 1: el de siempre -->
+    <div class="slide is-active">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1>Con <span class="brand-badge">7Speaking</span>: Habla, Conecta y Crece.</h1>
+          <p class="lead">En 7 Speaking, transformamos tu talento, hablamos tu idioma.</p>
+          <p>Descubre una nueva forma de aprender idiomas que se adapta a tu ritmo y necesidades.</p>
+          <div class="cta">
+            <a href="#" class="btn primary js-open-contact">Contacta con nuestros expertos</a>
+            <a href="#" class="btn outline js-open-contact">Solicita una demostración</a>
+          </div>
         </div>
+        <figure class="hero-figure">
+          <img src="assets/img/two_girls.png" alt="Estudiantes 7Speaking" />
+        </figure>
       </div>
-      <figure class="hero-figure">
-        <img src="assets/img/two_girls.png" alt="Estudiantes 7Speaking" />
-      </figure>
     </div>
-  </header>
+
+    <!-- Slide 2: landing LATAM -->
+    <div class="slide">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1>La plataforma de idiomas Europea llega a<br/>Latinoamérica</h1>
+          <p class="lead">Programas modernos, contenidos reales y resultados medibles.</p>
+          <div class="cta">
+            <a href="#" class="btn primary js-open-contact">Quiero conocer 7Speaking</a>
+          </div>
+        </div>
+        <figure class="hero-figure hero-figure--latam">
+          <!-- Reemplaza la imagen por tu versión de jóvenes LATAM diversos -->
+          <img src="assets/img/hero-latam.png" alt="Jóvenes latinoamericanos, modernos y diversos" />
+        </figure>
+      </div>
+    </div>
+
+    <!-- Controles -->
+    <button class="hero-arrow prev" aria-label="Anterior">‹</button>
+    <button class="hero-arrow next" aria-label="Siguiente">›</button>
+    <div class="hero-dots" role="tablist" aria-label="Indicadores"></div>
+  </div>
+</header>
+
 
   <!-- ================= IMPACTO ================= -->
   <section class="impact">
@@ -608,6 +693,72 @@
         showError();
       }
     });
+
+    (function(){
+      const slider = document.getElementById('heroSlider');
+      if(!slider) return;
+
+      const slides = Array.from(slider.querySelectorAll('.slide'));
+      const dotsWrap = slider.querySelector('.hero-dots');
+      const nextBtn = slider.querySelector('.next');
+      const prevBtn = slider.querySelector('.prev');
+
+      let i = 0, timer;
+
+      function renderDots(){
+        slides.forEach((_, idx) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('role','tab');
+          b.setAttribute('aria-label', 'Ir al slide ' + (idx+1));
+          b.addEventListener('click', () => goTo(idx, true));
+          dotsWrap.appendChild(b);
+        });
+      }
+      function update(){
+        slides.forEach((s,idx)=> s.classList.toggle('is-active', idx===i));
+        dotsWrap.querySelectorAll('button').forEach((b,idx)=> b.setAttribute('aria-selected', idx===i ? 'true':'false'));
+      }
+      function goTo(n, manual=false){
+        i = (n + slides.length) % slides.length;
+        update();
+        if (manual) restart();
+      }
+      const next = () => goTo(i+1);
+      const prev = () => goTo(i-1);
+
+      function start(){ timer = setInterval(next, 6000); }
+      function stop(){ clearInterval(timer); }
+      function restart(){ stop(); start(); }
+
+      renderDots(); update(); start();
+      nextBtn.addEventListener('click', () => { next(); restart(); });
+      prevBtn.addEventListener('click', () => { prev(); restart(); });
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('mouseleave', start);
+      slider.addEventListener('focusin', stop);
+      slider.addEventListener('focusout', start);
+    })();
+
+    (function(){
+      const slider = document.getElementById('heroSlider');
+      if(!slider) return;
+      const slides = Array.from(slider.querySelectorAll('.slide'));
+
+      function setHeroHeight(){
+        // Medimos la altura del contenido interno (la .wrap) de cada slide
+        let maxH = 0;
+        slides.forEach(s => {
+          const w = s.querySelector('.wrap');
+          if (w) maxH = Math.max(maxH, w.offsetHeight);
+        });
+        // margen extra para dots/flechas
+        slider.style.minHeight = (maxH + 40) + 'px';
+      }
+
+      window.addEventListener('load', setHeroHeight);
+      window.addEventListener('resize', setHeroHeight);
+    })();
   </script>
 </body>
 </html>
