@@ -429,13 +429,6 @@
     const sendBtn = document.getElementById('sendBtn');
     const btnText = sendBtn.querySelector('.btn-text');
 
-    // Estado limpio al cargar
-    window.addEventListener('DOMContentLoaded', () => {
-      const sendBtn = document.getElementById('sendBtn');
-      sendBtn?.classList.remove('loading');
-      sendBtn?.removeAttribute('disabled');
-    });
-
     function setBusy(on){
       if (on){
         sendBtn.disabled = true;
