@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>7Speaking para Universidades — Integraciones LMS y resultados</title>
+  <meta name="description" content="Soluciones de 7Speaking para universidades: integraciones con LMS (Moodle, Canvas, Blackboard), analítica, cumplimiento de la Ley de Bilingüismo en Colombia y proyectos con impacto social en Costa Rica." />
+
+  <!-- Tipografías (mismo look & feel del sitio) -->
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;700&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Favicon (opcional si ya lo cargas globalmente) -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <style>
+    :root{
+      --bg:#FFFCF5; --ink:#2B4150; --heading:#124E73; --accent:#325F7B;
+      --accent-2:#4E6D82; --badge:#E63B3F; --muted:#F2EFE8; --card:#FFFCF5; --border:#E5E0DF;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);
+      font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+    h1,h2,h3{font-family:"MuseoModerno",system-ui,sans-serif;color:var(--heading);line-height:1.25;margin:0 0 .5rem}
+    h1{font-size:clamp(1.9rem,4.5vw,3.2rem)}
+    h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+    h3{font-size:clamp(1.05rem,2.1vw,1.3rem)}
+    .wrap{width:min(1120px,92%);margin-inline:auto}
+
+    a.btn{display:inline-block;text-decoration:none}
+    .btn{appearance:none;border:0;border-radius:.6rem;padding:.85rem 1.2rem;font-weight:700;cursor:pointer}
+    .btn.primary{background:var(--accent);color:#fff}
+    .btn.outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+    .brand-badge{display:inline-block;background:var(--badge);color:#fff;padding:.06em .38em .14em;border-radius:.6rem;line-height:1;white-space:nowrap;box-shadow:0 2px 0 rgba(0,0,0,.06)}
+    header.site{padding:12px 0}
+    header.site .wrap{display:flex;align-items:center;justify-content:space-between}
+    .crumbs{font-size:.95rem;opacity:.85;margin:6px 0 0}
+    .crumbs a{color:var(--accent);text-decoration:none}
+    .crumbs a:hover{text-decoration:underline}
+
+    /* ===== Hero slider ===== */
+    header.hero{padding-block: clamp(12px,2.2vw,20px) 0;}
+    .hero-slider{position:relative;overflow:hidden;min-height:clamp(500px,72vh,720px)}
+    .hero-slider .slide{position:absolute;inset:0;display:flex;align-items:center;
+      opacity:0;visibility:hidden;transform:translateX(2%);
+      transition:opacity .6s ease,transform .6s ease,visibility 0s .6s}
+    .hero-slider .slide.is-active{opacity:1;visibility:visible;transform:none;transition:opacity .6s,transform .6s}
+    .hero-grid{width:min(1120px,92%);margin-inline:auto;display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(16px,4vw,48px);align-items:center}
+    .hero-figure{align-self:end;display:flex;justify-content:flex-end}
+    .hero-figure img{width:100%;max-width:620px;height:auto;object-fit:contain;display:block}
+    .lead{font-weight:800;margin:.4rem 0}
+    .cta{margin-top:.8rem;display:flex;gap:.8rem;flex-wrap:wrap}
+
+    .hero-dots{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
+    .hero-dots button{width:10px;height:10px;border-radius:999px;border:0;background:#cfd6da;opacity:.9;cursor:pointer}
+    .hero-dots button[aria-selected="true"]{background:var(--accent)}
+
+    @media (max-width: 900px){
+      .hero-slider{min-height:auto}
+      .hero-slider .slide{position:relative}
+      .hero-grid{grid-template-columns:1fr}
+      .hero-figure{justify-content:center}
+      .hero-figure img{max-width:420px}
+    }
+
+    /* ===== Integraciones LMS ===== */
+    .lms{padding:40px 0;background:#faf6ee;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .lms-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .lms-logos{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+    .chip{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:10px 16px;box-shadow:0 1px 1px rgba(0,0,0,.03)}
+    .chip img{height:40px;width:auto;display:block;filter:grayscale(100%);opacity:.9}
+    .lms-kv{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
+    .kv{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px}
+    .kv strong{color:var(--heading)}
+    @media (max-width:900px){ .lms-kv{grid-template-columns:1fr 1fr} }
+    @media (max-width:560px){ .lms-kv{grid-template-columns:1fr} }
+
+    /* ===== Casos de uso ===== */
+    .usecases{padding:40px 0}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .card h3{margin:.2rem 0}
+    @media (max-width:900px){ .cards{grid-template-columns:1fr} }
+
+    /* ===== Beneficios ===== */
+    .benefits{background:var(--accent-2);color:#fff;padding:40px 0}
+    .benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .benefit{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:18px}
+    .benefit h3{color:#fff}
+    @media (max-width:900px){ .benefit-grid{grid-template-columns:1fr} }
+
+    /* ===== CTA final ===== */
+    .cta-final{padding:36px 0}
+    .callout{background:var(--muted);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .callout h2{margin:0}
+
+    footer{padding:36px 0;color:#6d7b86;font-size:.95rem}
+  </style>
+</head>
+<body>
+
+  <!-- Header simple + migas -->
+  <header class="site">
+    <div class="wrap">
+      <div>
+        <h2 style="margin:0">Soluciones para Universidades</h2>
+        <div class="crumbs"><a href="index.html">Inicio</a> · Universidades</div>
+      </div>
+      <a href="index.html" class="btn outline">Volver al sitio</a>
+    </div>
+  </header>
+
+  <!-- HERO: carrusel con 2 mensajes -->
+  <header class="hero">
+    <div class="hero-slider" id="heroSliderUni" aria-label="Mensajes destacados">
+
+      <!-- Slide 1: Ley de Bilingüismo (Colombia) -->
+      <div class="slide is-active">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Cumplimiento de la <span class="brand-badge">Ley de Bilingüismo</span> en Colombia</h1>
+            <p class="lead">Alinea tus programas con estándares de nivel, evidencias y seguimiento real.</p>
+            <p>7Speaking ayuda a las universidades a definir metas por facultad, ofrecer rutas personalizadas y demostrar avance con analítica verificable.</p>
+            <div class="cta">
+              <a href="#" class="btn primary js-open-contact">Quiero una demo</a>
+              <a href="#lms" class="btn outline">Ver integraciones LMS</a>
+            </div>
+          </div>
+          <figure class="hero-figure">
+            <img src="assets/img/uni/hero-colombia.png" alt="Estudiantes y bandera de Colombia, educación bilingüe" />
+          </figure>
+        </div>
+      </div>
+
+      <!-- Slide 2: Impacto social (Costa Rica) -->
+      <div class="slide">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Aprendizaje con <span class="brand-badge">impacto social</span> en Costa Rica</h1>
+            <p class="lead">Proyectos reales con comunidades y ONG: práctica auténtica y sentido.</p>
+            <p>Integra proyectos de servicio social donde los estudiantes usan el idioma en contextos reales y miden su progreso con indicadores.</p>
+            <div class="cta">
+              <a href="#" class="btn primary js-open-contact">Conversemos</a>
+            </div>
+          </div>
+          <figure class="hero-figure">
+            <img src="assets/img/uni/hero-costa-rica.png" alt="Universitarios costarricenses colaborando en proyectos sociales" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="hero-dots" role="tablist" aria-label="Indicadores"></div>
+    </div>
+  </header>
+
+  <!-- Integraciones LMS -->
+  <section id="lms" class="lms">
+    <div class="wrap">
+      <div class="lms-head">
+        <h2>Integración nativa con tu <span class="brand-badge">LMS</span></h2>
+        <div class="lms-logos">
+          <span class="chip"><img src="assets/img/lms/moodle.png" alt=""></span>
+          <span class="chip"><img src="assets/img/lms/canvas.png" alt=""></span>
+          <span class="chip"><img src="assets/img/lms/blackboard.webp" alt=""></span>
+        </div>
+      </div>
+      <div class="lms-kv">
+        <div class="kv"><strong>LTI / SSO</strong><br>Acceso con cuentas institucionales. Sin contraseñas extra.</div>
+        <div class="kv"><strong>Sincronización de progreso</strong><br>Notas y avance visibles desde tu LMS.</div>
+        <div class="kv"><strong>SCORM & enlaces profundos</strong><br>Enlace directo a módulos, clases y evaluaciones.</div>
+        <div class="kv"><strong>Reportes para acreditación</strong><br>Evidencias por curso, cohorte y facultad.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Casos de uso universitarios -->
+  <section class="usecases">
+    <div class="wrap">
+      <h2>Casos de uso en universidades</h2>
+      <div class="cards" style="margin-top:12px">
+        <article class="card">
+          <h3>Inglés para carreras específicas</h3>
+          <p>Rutas por disciplina (ingeniería, negocios, salud, turismo) con contenidos auténticos y evaluaciones situacionales.</p>
+        </article>
+        <article class="card">
+          <h3>Inmersión híbrida y clubs</h3>
+          <p>Sesiones guiadas, clubs de conversación y retos cortos que conectan el aula con escenarios reales.</p>
+        </article>
+        <article class="card">
+          <h3>Internacionalización en casa</h3>
+          <p>Colaboraciones virtuales, noticias por sectores y proyectos con partners internacionales.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beneficios -->
+  <section class="benefits">
+    <div class="wrap">
+      <h2>Beneficios para tu institución</h2>
+      <div class="benefit-grid" style="margin-top:14px">
+        <div class="benefit">
+          <h3>Analítica accionable</h3>
+          <p>Paneles por cohorte, facultad y estudiante. Identificación temprana de riesgo y recomendaciones.</p>
+        </div>
+        <div class="benefit">
+          <h3>Personalización a escala</h3>
+          <p>Trayectorias adaptativas con IA y contenidos por sectores. Metas por nivel y objetivos de aprendizaje.</p>
+        </div>
+        <div class="benefit">
+          <h3>Evidencias para normativas</h3>
+          <p>Descargables y trazabilidad para procesos de calidad, bilingüismo y acreditaciones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-final">
+    <div class="wrap">
+      <div class="callout">
+        <h2>¿Listos para potenciar el bilingüismo en tu campus?</h2>
+        <div class="cta">
+          <a href="#" class="btn primary js-open-contact">Solicitar una demostración</a>
+          <a href="index.html" class="btn outline">Conocer 7Speaking</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© <span id="y"></span> 7Speaking.lat Soluciones para universidades.</div>
+  </footer>
+
+  <!-- ===== Hero slider script (autoplay con dots) ===== -->
+  <script>
+  (function(){
+    const slider = document.getElementById('heroSliderUni');
+    if(!slider) return;
+
+    const slides = Array.from(slider.querySelectorAll('.slide'));
+    const dotsWrap = slider.querySelector('.hero-dots');
+
+    let i = 0, timer;
+    const DELAY = 9000; // ← cambia aquí el tiempo entre slides (ms)
+
+    function renderDots(){
+      slides.forEach((_, idx) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('role','tab');
+        b.setAttribute('aria-label','Ir al slide '+(idx+1));
+        b.addEventListener('click', () => goTo(idx, true));
+        dotsWrap.appendChild(b);
+      });
+    }
+    function update(){
+      slides.forEach((s,idx)=> s.classList.toggle('is-active', idx===i));
+      dotsWrap.querySelectorAll('button').forEach((b,idx)=> b.setAttribute('aria-selected', idx===i ? 'true':'false'));
+    }
+    function goTo(n, manual=false){ i=(n+slides.length)%slides.length; update(); if(manual) restart(); }
+    const next = () => goTo(i+1);
+
+    function start(){ timer = setInterval(next, DELAY); }
+    function stop(){ clearInterval(timer); }
+    function restart(){ stop(); start(); }
+
+    renderDots(); update(); start();
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+    slider.addEventListener('focusin', stop);
+    slider.addEventListener('focusout', start);
+
+    // Ajusta min-height del contenedor al mayor slide
+    function setHeroHeight(){
+      let maxH = 0;
+      slides.forEach(s => {
+        const w = s.querySelector('.hero-grid');
+        if (w) maxH = Math.max(maxH, w.offsetHeight);
+      });
+      slider.style.minHeight = (maxH + 40) + 'px';
+    }
+    window.addEventListener('load', setHeroHeight);
+    window.addEventListener('resize', setHeroHeight);
+  })();
+
+  // Año del footer
+  document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

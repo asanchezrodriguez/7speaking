@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>7Speaking para Empresas — Beneficio para colaboradores, marca empleadora y retención</title>
+  <meta name="description" content="Soluciones de 7Speaking para empresas: experiencia del colaborador, beneficio corporativo, potencia tu marca empleadora, retén y haz crecer tu talento. Casos: Camioneros en México y Call center en Guatemala." />
+
+  <!-- Tipografías (look & feel del sitio) -->
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;700&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Favicon global (opcional si ya lo cargas) -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <style>
+    :root{
+      --bg:#FFFCF5; --ink:#2B4150; --heading:#124E73; --accent:#325F7B;
+      --accent-2:#4E6D82; --badge:#E63B3F; --muted:#F2EFE8; --card:#FFFCF5; --border:#E5E0DF;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);
+      font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+    h1,h2,h3{font-family:"MuseoModerno",system-ui,sans-serif;color:var(--heading);line-height:1.25;margin:0 0 .5rem}
+    h1{font-size:clamp(1.9rem,4.5vw,3.2rem)}
+    h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+    h3{font-size:clamp(1.05rem,2.1vw,1.3rem)}
+    .wrap{width:min(1120px,92%);margin-inline:auto}
+
+    a.btn{display:inline-block;text-decoration:none}
+    .btn{appearance:none;border:0;border-radius:.6rem;padding:.85rem 1.2rem;font-weight:700;cursor:pointer}
+    .btn.primary{background:var(--accent);color:#fff}
+    .btn.outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+    .brand-badge{display:inline-block;background:var(--badge);color:#fff;padding:.06em .38em .14em;border-radius:.6rem;line-height:1;white-space:nowrap;box-shadow:0 2px 0 rgba(0,0,0,.06)}
+
+    header.site{padding:12px 0}
+    header.site .wrap{display:flex;align-items:center;justify-content:space-between}
+    .crumbs{font-size:.95rem;opacity:.85;margin:6px 0 0}
+    .crumbs a{color:var(--accent);text-decoration:none}
+    .crumbs a:hover{text-decoration:underline}
+
+    /* ===== Hero slider ===== */
+    header.hero{padding-block: clamp(12px,2.2vw,20px) 0;}
+    .hero-slider{position:relative;overflow:hidden;min-height:clamp(520px,72vh,740px)}
+    .hero-slider .slide{position:absolute;inset:0;display:flex;align-items:center;
+      opacity:0;visibility:hidden;transform:translateX(2%);
+      transition:opacity .6s ease,transform .6s ease,visibility 0s .6s}
+    .hero-slider .slide.is-active{opacity:1;visibility:visible;transform:none;transition:opacity .6s,transform .6s}
+    .hero-grid{width:min(1120px,92%);margin-inline:auto;display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(16px,4vw,48px);align-items:center}
+    .hero-figure{align-self:end;display:flex;justify-content:flex-end}
+    .hero-figure img{width:100%;max-width:640px;height:auto;object-fit:contain;display:block}
+    .lead{font-weight:800;margin:.4rem 0}
+    .cta{margin-top:.8rem;display:flex;gap:.8rem;flex-wrap:wrap}
+
+    .hero-dots{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
+    .hero-dots button{width:10px;height:10px;border-radius:999px;border:0;background:#cfd6da;opacity:.9;cursor:pointer}
+    .hero-dots button[aria-selected="true"]{background:var(--accent)}
+
+    @media (max-width: 900px){
+      .hero-slider{min-height:auto}
+      .hero-slider .slide{position:relative}
+      .hero-grid{grid-template-columns:1fr}
+      .hero-figure{justify-content:center}
+      .hero-figure img{max-width:420px}
+    }
+
+    /* ===== Pilares ===== */
+    .pillars{padding:40px 0;background:#faf6ee;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .pillar{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px}
+    .pillar h3{margin:.2rem 0}
+    @media (max-width:900px){ .pillar-grid{grid-template-columns:1fr} }
+
+    /* ===== Escenarios ===== */
+    .scenarios{padding:40px 0}
+    .scards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .scard{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px}
+    .scard h3{margin:.2rem 0}
+    @media (max-width:900px){ .scards{grid-template-columns:1fr} }
+
+    /* ===== Integraciones IT ===== */
+    .it{background:var(--accent-2);color:#fff;padding:40px 0}
+    .it-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .it-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:18px}
+    .it h2,.it h3{color:#fff}
+    @media (max-width:900px){ .it-grid{grid-template-columns:1fr} }
+
+    /* ===== Testimonios chips (opcional) ===== */
+    .chips{padding:34px 0}
+    .chip{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:10px 16px;margin:6px 8px 0 0}
+    .chip small{opacity:.75}
+
+    /* ===== CTA final ===== */
+    .cta-final{padding:36px 0}
+    .callout{background:var(--muted);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .callout h2{margin:0}
+
+    footer{padding:36px 0;color:#6d7b86;font-size:.95rem}
+  </style>
+</head>
+<body>
+
+  <!-- Header simple + migas -->
+  <header class="site">
+    <div class="wrap">
+      <div>
+        <h2 style="margin:0">Soluciones para Empresas</h2>
+        <div class="crumbs"><a href="index.html">Inicio</a> · Empresas</div>
+      </div>
+      <a href="index.html" class="btn outline">Volver al sitio</a>
+    </div>
+  </header>
+
+  <!-- HERO: carrusel con 2 casos -->
+  <header class="hero">
+    <div class="hero-slider" id="heroSliderEmp" aria-label="Mensajes destacados">
+
+      <!-- Slide 1: Camioneros en México -->
+      <div class="slide is-active">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Experiencia del colaborador en ruta: <span class="brand-badge">camioneros en México</span></h1>
+            <p class="lead">Micro-lecciones móviles sin detener la operación.</p>
+            <p>Refuerza comunicación operativa y atención al cliente. Rutas cortas, offline y con metas por seguridad y servicio.</p>
+            <div class="cta">
+              <a href="#" class="btn primary js-open-contact">Hablar con un experto</a>
+              <a href="#it" class="btn outline">Ver integraciones IT</a>
+            </div>
+          </div>
+          <figure class="hero-figure">
+            <img src="assets/img/biz/hero-truck-mx.png" alt="Camioneros en México aprendiendo inglés en ruta con 7Speaking" />
+          </figure>
+        </div>
+      </div>
+
+      <!-- Slide 2: Call center en Guatemala -->
+      <div class="slide">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Call center en Guatemala: <span class="brand-badge">mejor CX</span>, menor AHT</h1>
+            <p class="lead">Entrenamiento por situaciones reales y KPIs de calidad.</p>
+            <p>Simulaciones, scripts y noticias por sector para acelerar comprensión, NPS y resolución en la primera llamada.</p>
+            <div class="cta">
+              <a href="#" class="btn primary js-open-contact">Solicitar demostración</a>
+            </div>
+          </div>
+          <figure class="hero-figure">
+            <img src="assets/img/biz/hero-callcenter-gt.png" alt="Agentes de call center en Guatemala entrenando inglés enfocado a CX" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="hero-dots" role="tablist" aria-label="Indicadores"></div>
+    </div>
+  </header>
+
+  <!-- Pilares: beneficio, marca empleadora, retención -->
+  <section class="pillars">
+    <div class="wrap">
+      <h2>7Speaking como <span class="brand-badge">beneficio</span> que potencia tu marca empleadora</h2>
+      <div class="pillar-grid" style="margin-top:14px">
+        <article class="pillar">
+          <h3>Experiencia del colaborador</h3>
+          <p>Aprendizaje verdaderamente flexible: móvil, micro-lecciones, desafíos breves y rutas por rol.</p>
+        </article>
+        <article class="pillar">
+          <h3>Marca empleadora</h3>
+          <p>Ofrece un beneficio de alto valor percibido que atrae talento y mejora el engagement interno.</p>
+        </article>
+        <article class="pillar">
+          <h3>Retención y crecimiento</h3>
+          <p>Planes de carrera con niveles y certificaciones. Métricas de progreso por persona y por área.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Escenarios de uso -->
+  <section class="scenarios">
+    <div class="wrap">
+      <h2>Programas por <span class="brand-badge">escenario</span> y rol</h2>
+      <div class="scards" style="margin-top:12px">
+        <article class="scard">
+          <h3>Frontline & Operaciones</h3>
+          <p>Operadores, logística, retail. Lecciones “on-the-go” con modo offline y objetivos de seguridad/servicio.</p>
+        </article>
+        <article class="scard">
+          <h3>Customer Experience</h3>
+          <p>Call/contact centers. Práctica por situaciones, shadowing, scripts vivos y evaluación de calidad.</p>
+        </article>
+        <article class="scard">
+          <h3>Equipos profesionales</h3>
+          <p>Comercial, compras, IT. Contenidos por sector, reuniones simuladas y feedback en tiempo real.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integraciones IT -->
+  <section id="it" class="it">
+    <div class="wrap">
+      <h2>Listo para tu <span class="brand-badge">IT</span></h2>
+      <div class="it-grid" style="margin-top:14px">
+        <div class="it-item">
+          <h3>SSO & provisión</h3>
+          <p>Inicio de sesión con tu IdP (Google Workspace, Azure AD, Okta). Alta/baja automática por grupos.</p>
+        </div>
+        <div class="it-item">
+          <h3>LMS/LXP & SCORM</h3>
+          <p>Conecta con tu LMS/LXP o usa enlaces profundos para integrar contenidos y progreso.</p>
+        </div>
+        <div class="it-item">
+          <h3>Seguridad y datos</h3>
+          <p>Cifrado en tránsito y en reposo, controles de acceso y reportes para auditoría.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chips de impacto (opcional) -->
+  <section class="chips">
+    <div class="wrap">
+      <span class="chip">↑ Engagement <small>programas como beneficio</small></span>
+      <span class="chip">↓ AHT <small>call center</small></span>
+      <span class="chip">↑ Seguridad & servicio <small>operaciones</small></span>
+      <span class="chip">↑ Retención <small>planes de carrera</small></span>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-final">
+    <div class="wrap">
+      <div class="callout">
+        <h2>Impulsa tu marca empleadora y haz crecer a tu talento</h2>
+        <div class="cta">
+          <a href="#" class="btn primary js-open-contact">Quiero una demo</a>
+          <a href="index.html" class="btn outline">Conocer 7Speaking</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© <span id="y"></span> 7Speaking. Soluciones para empresas.</div>
+  </footer>
+
+  <!-- ===== Hero slider script (autoplay con dots) ===== -->
+  <script>
+  (function(){
+    const slider = document.getElementById('heroSliderEmp');
+    if(!slider) return;
+
+    const slides = Array.from(slider.querySelectorAll('.slide'));
+    const dotsWrap = slider.querySelector('.hero-dots');
+
+    let i = 0, timer;
+    const DELAY = 10000; // ← ajusta el tiempo entre slides (ms)
+
+    function renderDots(){
+      slides.forEach((_, idx) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('role','tab');
+        b.setAttribute('aria-label','Ir al slide '+(idx+1));
+        b.addEventListener('click', () => goTo(idx, true));
+        dotsWrap.appendChild(b);
+      });
+    }
+    function update(){
+      slides.forEach((s,idx)=> s.classList.toggle('is-active', idx===i));
+      dotsWrap.querySelectorAll('button').forEach((b,idx)=> b.setAttribute('aria-selected', idx===i ? 'true':'false'));
+    }
+    function goTo(n, manual=false){ i=(n+slides.length)%slides.length; update(); if(manual) restart(); }
+    const next = () => goTo(i+1);
+
+    function start(){ timer = setInterval(next, DELAY); }
+    function stop(){ clearInterval(timer); }
+    function restart(){ stop(); start(); }
+
+    renderDots(); update(); start();
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+    slider.addEventListener('focusin', stop);
+    slider.addEventListener('focusout', start);
+
+    // Ajusta min-height del contenedor al mayor slide
+    function setHeroHeight(){
+      let maxH = 0;
+      slides.forEach(s => {
+        const w = s.querySelector('.hero-grid');
+        if (w) maxH = Math.max(maxH, w.offsetHeight);
+      });
+      slider.style.minHeight = (maxH + 40) + 'px';
+    }
+    window.addEventListener('load', setHeroHeight);
+    window.addEventListener('resize', setHeroHeight);
+  })();
+
+  // Año del footer
+  document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Nota: si esta página no tiene aún el modal de contacto,
+       copia el bloque del modal desde tu index.html (div#contact-modal + script)
+       para que los botones .js-open-contact funcionen aquí también. -->
+</body>
+</html>

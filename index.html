@@ -287,6 +287,39 @@
 
     /* pequeño ajuste visual dentro del H1 */
     h1 .brand-badge{ margin: 0 .08em; }
+
+    /* === CTAs soluciones (universidades / empresas) === */
+    .solutions{ padding: 22px 0 8px; }
+    .solution-grid{
+      display:grid; grid-template-columns: 1fr 1fr; gap:22px;
+    }
+    .solution-card{
+      display:flex; gap:14px; align-items:center;
+      background:#fff; border:1px solid var(--border); border-radius:14px;
+      padding:14px 16px; text-decoration:none;
+      color:inherit; box-shadow:0 1px 2px rgba(0,0,0,.04);
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .solution-card:hover{
+      transform: translateY(-2px);
+      box-shadow:0 6px 20px rgba(0,0,0,.06);
+      border-color:#d7d2d1;
+    }
+    .solution-icon{
+      width:56px; height:56px; border-radius:50%;
+      background:var(--muted); color:var(--accent);
+      display:grid; place-items:center; flex:0 0 56px;
+    }
+    .solution-card h3{ margin:0; color:var(--heading); font-size:1.05rem; }
+    .solution-card p{ margin:.15rem 0 0; font-size:.95rem; }
+    .solution-link{
+      display:inline-block; margin-top:6px; font-weight:700; color:var(--accent); text-decoration:none;
+    }
+    .solution-link:hover{ text-decoration:underline; }
+    @media (max-width: 880px){
+      .solution-grid{ grid-template-columns:1fr; }
+      .solution-card{ align-items:flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -459,6 +492,46 @@
       </div>
     </div>
   </section>
+
+  <!-- === Soluciones por segmento === -->
+  <section class="solutions" aria-label="Soluciones 7Speaking">
+    <div class="wrap">
+      <div class="solution-grid">
+
+        <!-- Universidades -->
+        <a class="solution-card" href="universidades.html" aria-label="Conozca nuestras soluciones para universidades">
+          <div class="solution-icon">
+            <!-- Mortarboard / birrete -->
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path fill="currentColor" d="M12 3 2 8l10 5 9-4.5V11h1V8L12 3zm-8 8v4.5C4 18.985 7.582 21 12 21s8-2.015 8-5.5V11l-8 4-8-4z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Soluciones para Universidades</h3>
+            <p>Programas de idiomas para grados y posgrados, con analítica académica y contenidos adaptados.</p>
+            <span class="solution-link">Conozca nuestras soluciones →</span>
+          </div>
+        </a>
+
+        <!-- Empresas -->
+        <a class="solution-card" href="empresas.html" aria-label="Conozca nuestras soluciones para empresas">
+          <div class="solution-icon">
+            <!-- Briefcase / portafolio -->
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path fill="currentColor" d="M9 4h6a2 2 0 0 1 2 2v1h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3V6a2 2 0 0 1 2-2Zm6 3V6H9v1h6Zm6 3H3v7h18v-7Zm-9 3h4v2h-4v-2Z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Soluciones para Empresas</h3>
+            <p>Capacitación corporativa escalable con reporting y métricas de impacto para RR.HH. y equipos.</p>
+            <span class="solution-link">Conozca nuestras soluciones →</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
 
   <!-- ================= APRENDE A TU RITMO ================= -->
   <section class="section muted">
