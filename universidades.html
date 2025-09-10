@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>7Speaking para Universidades — Integraciones LMS y resultados</title>
   <meta name="description" content="Soluciones de 7Speaking para universidades: integraciones con LMS (Moodle, Canvas, Blackboard), analítica, cumplimiento de la Ley de Bilingüismo en Colombia y proyectos con impacto social en Costa Rica." />
+  <link rel="stylesheet" href="assets/css/topbar.css">
 
   <!-- Tipografías (mismo look & feel del sitio) -->
   <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;700&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -97,7 +98,7 @@
   </style>
 </head>
 <body>
-
+  <div id="topbarMount"></div>
   <!-- Header simple + migas -->
   <header class="site">
     <div class="wrap">
@@ -105,7 +106,6 @@
         <h2 style="margin:0">Soluciones para Universidades</h2>
         <div class="crumbs"><a href="index.html">Inicio</a> · Universidades</div>
       </div>
-      <a href="index.html" class="btn outline">Volver al sitio</a>
     </div>
   </header>
 
@@ -286,5 +286,6 @@
   // Año del footer
   document.getElementById('y').textContent = new Date().getFullYear();
   </script>
+  <script src="assets/js/topbar.js" defer></script>
 </body>
 </html>

@@ -6,6 +6,8 @@
   <title>7Speaking para Empresas — Beneficio para colaboradores, marca empleadora y retención</title>
   <meta name="description" content="Soluciones de 7Speaking para empresas: experiencia del colaborador, beneficio corporativo, potencia tu marca empleadora, retén y haz crecer tu talento. Casos: Camioneros en México y Call center en Guatemala." />
 
+  <link rel="stylesheet" href="assets/css/topbar.css">
+
   <!-- Tipografías (look & feel del sitio) -->
   <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;700&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -64,6 +66,78 @@
     /* Imagen del hero clickeable (artículos) */
     .hero-figure [data-article]{ cursor:pointer; transition: transform .18s ease; }
     .hero-figure [data-article]:hover{ transform: translateY(-2px); }
+
+    /* Tarjeta clickeable sobre la imagen del héroe */
+    .media-tile{
+      position: relative;
+      display: inline-block;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      outline-offset: 6px;            /* accesible al tab */
+      border-radius: 14px;            /* igual que tus cards */
+    }
+
+    /* Asegura que la imagen no “bote” el overlay */
+    .media-tile img{
+      display: block;
+      width: 100%;
+      max-width: 640px;               /* ya lo usabas */
+      height: auto;
+      border-radius: 14px;
+    }
+
+    /* Máscara/gradiente sutil para lectura del CTA */
+    .media-tile::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: 14px;
+      background:
+        radial-gradient(120% 80% at 50% 115%, rgba(12,18,22,.42) 0%, rgba(12,18,22,0) 60%),
+        linear-gradient(to top, rgba(12,18,22,.18), transparent 38%);
+      opacity:.0;
+      transition:opacity .25s ease;
+      pointer-events:none;
+    }
+
+    /* CTA “píldora” */
+    .tile-cta{
+      position:absolute;
+      left:50%;
+      bottom:10px;
+      transform:translateX(-50%);
+      display:inline-flex;
+      gap:.5rem;
+      align-items:center;
+      padding:.55rem .9rem;
+      border-radius:999px;
+      font-weight:800;
+      background: rgba(12,18,22,.82);
+      color:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.25);
+      transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
+      opacity:.94;
+      will-change: transform, opacity;
+    }
+
+    /* Hover/focus con más presencia */
+    .media-tile:hover::after,
+    .media-tile:focus-visible::after{ opacity:1; }
+
+    .media-tile:hover .tile-cta,
+    .media-tile:focus-visible .tile-cta{
+      transform:translateX(-50%) translateY(-2px);
+      opacity:1;
+      background: rgba(12,18,22,.9);
+    }
+
+    /* En pantallas muy pequeñas el CTA puede subir un poco */
+    @media (max-width: 520px){
+      .tile-cta{ bottom:8px; font-size:.95rem; }
+        }
+
 
     /* ===== Pilares ===== */
     .pillars{padding:40px 0;background:#faf6ee;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -144,7 +218,7 @@
   </style>
 </head>
 <body>
-
+  <div id="topbarMount"></div>
   <!-- Header simple + migas -->
   <header class="site">
     <div class="wrap">
@@ -152,7 +226,6 @@
         <h2 style="margin:0">Soluciones para Empresas</h2>
         <div class="crumbs"><a href="index.html">Inicio</a> · Empresas</div>
       </div>
-      <a href="index.html" class="btn outline">Volver al sitio</a>
     </div>
   </header>
 
@@ -173,10 +246,20 @@
             </div>
           </div>
           <figure class="hero-figure">
-            <img src="assets/img/biz/hero-truck-mx.png"
-                 alt="Camioneros en México aprendiendo inglés en ruta"
-                 data-article="cases/camioneros-mexico.html"
-                 data-title="Camioneros de México: inglés operativo sin detener la ruta" />
+            <button
+              type="button"
+              class="media-tile"
+              data-article="cases/camioneros-mexico.html"
+              data-title="Camioneros de México: inglés operativo sin detener la ruta"
+              aria-label="Abrir artículo: Camioneros de México">
+              <img src="assets/img/biz/hero-truck-mx.png" alt="Camioneros en México entrenando inglés operativo" />
+              <span class="tile-cta">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path d="M5 12h12M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Lee el caso real
+              </span>
+            </button>
           </figure>
         </div>
       </div>
@@ -193,10 +276,20 @@
             </div>
           </div>
           <figure class="hero-figure">
-            <img src="assets/img/biz/hero-callcenter-gt.png"
-                alt="Agentes de call center en Guatemala entrenando inglés enfocado a CX"
-                data-article="cases/callcenter-guatemala.html"
-                data-title="Call center en Guatemala: inglés que impacta CX, AHT y calidad" />
+            <button
+              type="button"
+              class="media-tile"
+              data-article="cases/callcenter-guatemala.html"
+              data-title="Call center en Guatemala: mejor CX, menor AHT"
+              aria-label="Abrir artículo: Call center en Guatemala">
+              <img src="assets/img/biz/hero-callcenter-gt.png" alt="Agentes de call center en Guatemala" />
+              <span class="tile-cta">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path d="M5 12h12M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Lee el caso real
+              </span>
+            </button>
           </figure>
         </div>
       </div>
@@ -430,7 +523,8 @@
     });
   })();
   </script>
-
+  <script src="assets/js/topbar.js" defer></script>
   <!-- (tu modal de contacto va aquí si lo usas en esta página) -->
+
 </body>
 </html>

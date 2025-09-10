@@ -33,6 +33,188 @@
   <link rel="icon" href="favicon.ico" sizes="any" />
 
   <style>
+    /* Limpiar estilos heredados de otros temas */
+    .article-sheet blockquote, .article-sheet .quote{
+      all: unset;
+      display: block;
+    }
+
+    /* Estilo del quote en el modal */
+    .article-sheet .quote{
+      position: relative;
+      margin: .9rem 0;
+      padding: .9rem 2.6rem .9rem 2.6rem;
+      background: #fff6f6;
+      border: 1px solid #f2d7d9;
+      border-radius: 10px;
+      color: #2b4150;
+    }
+    .article-sheet .quote::before,
+    .article-sheet .quote::after{
+      position: absolute;
+      font-size: 28px;
+      line-height: 1;
+      color: #E63B3F;
+      font-weight: 800;
+    }
+    .article-sheet .quote::before{
+      content: "“";
+      left: 12px; top: 8px;
+    }
+    .article-sheet .quote::after{
+      content: "”";
+      right: 12px; bottom: 6px;
+    }
+  </style>
+
+  
+  <style>
+    /* ===== Topbar ===== */
+    :root{
+      --tb-bg:#0f1214;        /* fondo oscuro */
+      --tb-ink:#e8eef2;       /* texto principal */
+      --tb-ink-dim:#b9c3ca;   /* texto tenue */
+      --tb-accent:#19c463;    /* verde CTA */
+      --tb-line:#2a3136;      /* línea separadora inferior */
+    }
+
+    .topbar{
+      position:sticky; top:0; z-index:1000;
+      background:var(--tb-bg); color:var(--tb-ink);
+      border-bottom:1px solid var(--tb-line);
+    }
+    .tb-wrap{
+      width:min(1200px,92%); margin-inline:auto;
+      display:flex; align-items:center; justify-content:space-between;
+      min-height:56px; gap:16px;
+    }
+
+    /* Logo */
+    .tb-logo{
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; color:var(--tb-ink); font-weight:800;
+      font-family:"MuseoModerno",system-ui; font-size:1.15rem;
+      letter-spacing:.2px;
+    }
+    .tb-logo span{
+      display:inline-grid; place-items:center;
+      width:26px; height:26px; border-radius:7px;
+      background:#e63b3f; color:white; font-weight:900;
+      box-shadow:0 1px 0 rgba(0,0,0,.25);
+    }
+
+    /* Nav */
+    .tb-nav{
+      display:flex; align-items:center; gap:20px;
+    }
+    .tb-link{
+      position:relative; display:inline-block;
+      padding:14px 6px; color:var(--tb-ink); text-decoration:none; font-weight:700;
+    }
+    .tb-link::after{
+      content:""; position:absolute; left:0; right:0; bottom:8px; height:2px;
+      background:currentColor; opacity:.9; transform:scaleX(0); transform-origin:left;
+      transition:transform .2s ease;
+    }
+    .tb-link:hover::after,
+    .tb-link[aria-current="page"]::after{ transform:scaleX(1); }
+
+    .tb-right{ display:flex; align-items:center; gap:12px; margin-left:8px; }
+    .tb-lang{
+      padding:.35rem .55rem; border:1px solid #2a3136; border-radius:.5rem;
+      font-weight:700; color:var(--tb-ink-dim);
+    }
+    .tb-cta{
+      display:inline-block; text-decoration:none; font-weight:800; color:#0d1a12;
+      background:var(--tb-accent); padding:.55rem .9rem; border-radius:999px;
+      box-shadow:0 2px 0 rgba(0,0,0,.15);
+    }
+    .tb-cta:hover{ filter:brightness(1.05); }
+
+    /* Burger (móvil) */
+    .tb-burger{
+      display:none; background:none; border:0; cursor:pointer;
+      width:38px; height:38px; border-radius:8px;
+    }
+    .tb-burger span{
+      display:block; height:2px; margin:7px 6px; background:#cfd6da; border-radius:2px;
+      transition:transform .18s ease, opacity .18s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .tb-burger{ display:inline-block; }
+      .tb-nav{
+        position:fixed; inset:56px 0 auto 0; background:var(--tb-bg);
+        border-top:1px solid var(--tb-line);
+        display:grid; gap:6px; padding:10px 16px 16px;
+        transform:translateY(-8px); opacity:0; pointer-events:none;
+        transition:transform .2s ease, opacity .2s ease;
+      }
+      .tb-nav.open{ transform:none; opacity:1; pointer-events:auto; }
+      .tb-right{ justify-content:flex-start; }
+      .tb-link{ padding:12px 2px; }
+    }
+
+    /* Cuando el menú está abierto, animamos la hamburguesa */
+    .tb-burger[aria-expanded="true"] span:nth-child(1){ transform:translateY(9px) rotate(45deg); }
+    .tb-burger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+    .tb-burger[aria-expanded="true"] span:nth-child(3){ transform:translateY(-9px) rotate(-45deg); }
+
+    /* ===== Enfoque lingüístico: chevrons/íconos pulcros ===== */
+      /* Contenedor de íconos tipo “chevron” */
+    .focus-section .focus-chevrons{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+      margin:14px 0 8px;
+    }
+    .focus-section .chev{
+      position:relative; height:92px;
+      background:#eee7dc;            /* tono suave dentro de tu paleta */
+      border:1px solid var(--border);
+      border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      color:#4e6d82;                  /* azul grisáceo que ya usas */
+      isolation:isolate;
+    }
+    /* Pico que crea continuidad entre tarjetas */
+    .focus-section .chev::after{
+      content:""; position:absolute; top:0; bottom:0; right:-18px; width:18px;
+      background:inherit; border-top:inherit; border-right:inherit; border-bottom:inherit;
+      clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%, 100% 50%);
+      border-top-left-radius:0; border-bottom-left-radius:0;
+    }
+    .focus-section .chev:last-child::after{ display:none; }
+
+    /* Texto: tres columnas */
+    .focus-section .features{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:26px;
+      margin-top:10px;
+    }
+    .focus-section .feat h3{ margin:.2rem 0 .3rem; }
+    .focus-section .feat p{ margin:0; }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .focus-section .focus-chevrons{ grid-template-columns:1fr; }
+      .focus-section .chev::after{ display:none; }
+      .focus-section .features{ grid-template-columns:1fr; }
+    }
+
+    /* Tamaño consistente de los PNG del bloque de enfoque */
+    /* por defecto: en B/N */
+    .focus-section .chev .ico-img{
+      width:56px; height:auto; display:block;
+      filter: grayscale(100%) contrast(1.05);
+      -webkit-filter: grayscale(100%) contrast(1.05); /* iOS */
+      transition: filter .25s ease, opacity .25s ease;
+      opacity:.95; /* un toque más suave */
+    }
+
+    @media (min-width: 1200px){
+      .focus-section .ico-img{ width: 56px; }
+    }
+
+
     :root{
       /* Colores de marca tomados del diseño original */
       --bg: #FFFCF5;           /* crema */
@@ -320,10 +502,233 @@
       .solution-grid{ grid-template-columns:1fr; }
       .solution-card{ align-items:flex-start; }
     }
+
+    /* ===== Nuestra misión: fondo moderno + grid responsivo ===== */
+    .mission{
+      position: relative;
+      padding: 44px 0;
+      background: linear-gradient(180deg,#faf6ee 0%, #f5f1e9 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden; /* evita cortes de los radiales */
+    }
+
+    /* Radiales suaves con colores de la marca (no se cortan en ningún ancho) */
+    .mission::before{
+      content:"";
+      position:absolute;
+      inset:-25% -12% -35% -12%;     /* se expande más allá del contenedor */
+      pointer-events:none;
+      z-index:0;
+      background:
+        radial-gradient(60% 48% at 18% 25%, rgba(50,95,123,.10) 0%, rgba(50,95,123,0) 60%),
+        radial-gradient(48% 42% at 84% 30%, rgba(230,59,63,.08) 0%, rgba(230,59,63,0) 60%),
+        radial-gradient(42% 38% at 50% 92%, rgba(18,78,115,.08) 0%, rgba(18,78,115,0) 65%);
+      filter: saturate(110%);
+    }
+
+    /* (Opcional) malla muy tenue para textura */
+    .mission::after{
+      content:"";
+      position:absolute;
+      inset:0; z-index:0; pointer-events:none;
+      background:
+        linear-gradient(transparent 96%, rgba(0,0,0,.03) 97%),
+        linear-gradient(90deg, transparent 96%, rgba(0,0,0,.03) 97%);
+      background-size: 22px 22px, 22px 22px;
+      opacity:.28;
+    }
+
+    .mission .wrap{ position:relative; z-index:1; }
+    .mission h2{ margin:0 0 12px; }
+
+    .mission-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 22px 40px;
+      align-items:start;
+      margin-top: 8px;
+    }
+
+    .mission-item h3{ margin:.2rem 0 .3rem; }
+    .mission-item p{ margin:0; }
+
+    .mission-foot{
+      grid-column: 1 / -1;           /* ocupa todo el ancho */
+      margin: 6px 0 0;
+    }
+
+    /* Responsivo */
+    @media (max-width: 900px){
+      .mission{ padding: 36px 0; }
+      .mission-grid{ grid-template-columns: 1fr; gap:18px; }
+    }
+
+    /* Accesibilidad: usuarios que reducen transparencias/efectos */
+    @media (prefers-reduced-transparency: reduce){
+      .mission::before, .mission::after{ display:none; }
+      .mission{ background:#f6f2ea; }
+    }
+
+    /* Tarjeta clickeable sobre la imagen del héroe */
+    .media-tile{
+      position: relative;
+      display: inline-block;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      outline-offset: 6px;
+      border-radius: 14px;
+    }
+    .media-tile img{
+      display: block;
+      width: 100%;
+      max-width: 640px;     /* igual que tu hero */
+      height: auto;
+      border-radius: 14px;
+    }
+    .media-tile::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: 14px;
+      background:
+        radial-gradient(120% 80% at 50% 115%, rgba(12,18,22,.42) 0%, rgba(12,18,22,0) 60%),
+        linear-gradient(to top, rgba(12,18,22,.18), transparent 38%);
+      opacity:.0;
+      transition:opacity .25s ease;
+      pointer-events:none;
+    }
+    .tile-cta{
+      position:absolute;
+      left:50%;
+      bottom:10px;
+      transform:translateX(-50%);
+      display:inline-flex;
+      gap:.5rem;
+      align-items:center;
+      padding:.55rem .9rem;
+      border-radius:999px;
+      font-weight:800;
+      background: rgba(12,18,22,.82);
+      color:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.25);
+      transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
+      opacity:.95;
+    }
+    .media-tile:hover::after,
+    .media-tile:focus-visible::after{ opacity:1; }
+    .media-tile:hover .tile-cta,
+    .media-tile:focus-visible .tile-cta{
+      transform:translateX(-50%) translateY(-2px);
+      opacity:1;
+      background: rgba(12,18,22,.9);
+    }
+    @media (max-width: 520px){
+      .tile-cta{ bottom:8px; font-size:.95rem; }
+    }
+
+    /* ===== Testimonios ===== */
+.testimonials .wrap { width: min(1120px, 92%); margin-inline: auto; }
+.testimonials h2 { margin: 0 0 12px; }
+
+.t-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.t-card{
+  background: #fff;
+  border: 1px solid #e6e1de;
+  border-radius: 12px;
+  padding: 16px 16px 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.03);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.t-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.06);
+}
+
+.t-card blockquote{
+  position: relative;
+  margin: 0 0 10px;
+  color: #2b4150;
+  line-height: 1.6;
+  padding: 14px 18px 14px 44px; /* espacio para la comilla */
+  background: #faf7f2;
+  border: 1px solid #efe9e4;
+  border-radius: 10px;
+}
+
+/* Comillas tipográficas, generadas por CSS */
+.t-card blockquote::before,
+.t-card blockquote::after{
+  position: absolute;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 800;
+  color: #E63B3F;
+}
+.t-card blockquote::before{
+  content: "“";
+  left: 10px; top: 6px;
+}
+.t-card blockquote::after{
+  content: "”";
+  right: 10px; bottom: 6px;
+}
+
+.t-card figcaption{
+  margin-top: 8px;
+  font-weight: 700;
+  color: #124E73;       /* tono corporativo de tus headings */
+  font-size: .98rem;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .t-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px){
+  .t-grid{ grid-template-columns: 1fr; }
+}
+
+
   </style>
 </head>
 <body>
-  
+<!-- ===== Topbar ===== -->
+<header class="topbar" role="banner">
+  <div class="tb-wrap">
+    <!-- Logo (puedes reemplazar por <img ...>) -->
+    <a class="tb-logo" href="index.html" aria-label="7Speaking">
+      <span>7</span>Speaking
+    </a>
+
+    <!-- Botón hamburguesa (móvil) -->
+    <button class="tb-burger" aria-controls="tb-nav" aria-expanded="false" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Navegación -->
+    <nav id="tb-nav" class="tb-nav" aria-label="Navegación principal">
+      <a class="tb-link" href="universidades.html">Universidades</a>
+      <a class="tb-link" href="empresas.html">Empresas</a>
+      <a class="tb-link" href="#camaras">Cámaras y asociaciones</a>
+      <a class="tb-link" href="#crece">Crece tú</a>
+
+      <div class="tb-right">
+        <div class="tb-lang" aria-label="Idioma actual">ES</div>
+        <a class="tb-cta" href="#contacto">Empieza hoy</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- /Topbar -->
+ 
 <!-- ================= HERO ================= -->
 <header class="hero">
   <div class="hero-slider" id="heroSlider" aria-label="Mensajes destacados">
@@ -355,9 +760,21 @@
             <a href="#" class="btn primary js-open-contact">Quiero conocer 7Speaking</a>
           </div>
         </div>
-        <figure class="hero-figure hero-figure--latam">
-          <!-- Reemplaza la imagen por tu versión de jóvenes LATAM diversos -->
-          <img src="assets/img/hero-latam.png" alt="Jóvenes latinoamericanos, modernos y diversos" />
+        <figure class="hero-figure">
+          <button
+            type="button"
+            class="media-tile"
+            data-article="cases/bienvenida-7speaking-latam.html"
+            data-title="Bienvenida a 7Speaking.lat: Plataforma líder ahora en LATAM"
+            aria-label="Abrir anuncio de bienvenida">
+            <img src="assets/img/hero-latam.png" alt="Collage de monumentos de LATAM" />
+            <span class="tile-cta">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path d="M5 12h12M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Lee el anuncio
+            </span>
+          </button>
         </figure>
       </div>
     </div>
@@ -465,33 +882,52 @@
   </section>
 
   <!-- ================= TRANSFORMA TU ENFOQUE ================= -->
-  <section class="section">
-    <div class="wrap">
-      <h2>Transforma tu enfoque lingüístico</h2>
-      <p class="intro">Con 7Speaking, puedes reinventar la forma de capacitarte en idiomas extranjeros. Nuestra innovadora solución permite crear programas de formación a medida, perfectamente adaptados a tus necesidades específicas como estudiante universitario o profesional.</p>
+    <section class="section focus-section" id="enfoque">
+      <div class="wrap">
+        <h2>Transforma tu enfoque lingüístico</h2>
+        <p class="intro">
+          Con 7Speaking, puedes reinventar la forma de capacitarte en idiomas extranjeros.
+          Nuestra innovadora solución permite crear programas de formación a medida,
+          perfectamente adaptados a tus necesidades específicas como estudiante universitario o profesional.
+        </p>
 
-      <div class="ribbon" aria-hidden="true">
-        <div>⌁</div>
-        <div>☊</div>
-        <div>🚀</div>
-      </div>
+        <!-- Bloque chevrons/íconos -->
+        <div class="focus-chevrons" aria-hidden="true">
+          <!-- 1 -->
+          <div class="chev" title="Identifica competencias">
+            <img class="ico-img" src="/assets/img/icons/focus-target.png" alt="" width="56" height="56" loading="lazy" decoding="async">
+          </div>
 
-      <div class="features">
-        <div>
-          <h3>Identifica competencias</h3>
-          <p>Nuestra tecnología basada en <strong>INTELIGENCIA ARTIFICIAL</strong>, facilita el establecimiento de objetivos personalizados y el seguimiento de progresos en tiempo real, alineando tu desarrollo académico con tus metas profesionales.</p>
+          <!-- 2 -->
+          <div class="chev" title="Temas y noticias por sector">
+            <img class="ico-img" src="/assets/img/icons/focus-news.png" alt="" width="56" height="56" loading="lazy" decoding="async">
+          </div>
+
+          <!-- 3 -->
+          <div class="chev" title="Acelera tu aprendizaje">
+            <img class="ico-img" src="/assets/img/icons/focus-rocket.png" alt="" width="56" height="56" loading="lazy" decoding="async">
+          </div>
         </div>
-        <div>
-          <h3>Temas y noticias por sector</h3>
-          <p>Con módulos interactivos, vídeos, pruebas y juegos, nuestra plataforma te involucra en un viaje de aprendizaje dinámico y eficaz, reforzando tus conocimientos lingüísticos diariamente.</p>
-        </div>
-        <div>
-          <h3>Acelera tu aprendizaje</h3>
-          <p>Para abordar competencias específicas o necesidades urgentes, las sesiones personalizadas ofrecen una oportunidad única para la práctica intensiva y la mejora rápida de tus habilidades lingüísticas.</p>
+
+        <!-- 3 columnas de texto (fuera de .focus-chevrons) -->
+        <div class="features">
+          <article class="feat">
+            <h3>Identifica competencias</h3>
+            <p>Nuestra tecnología basada en <strong>INTELIGENCIA ARTIFICIAL</strong>, facilita el establecimiento de objetivos personalizados y el seguimiento de progresos en tiempo real, alineando tu desarrollo académico con tus metas profesionales.</p>
+          </article>
+
+          <article class="feat">
+            <h3>Temas y noticias por sector</h3>
+            <p>Con módulos interactivos, vídeos, pruebas y juegos, nuestra plataforma te involucra en un viaje de aprendizaje dinámico y eficaz, reforzando tus conocimientos lingüísticos diariamente.</p>
+          </article>
+
+          <article class="feat">
+            <h3>Acelera tu aprendizaje</h3>
+            <p>Para abordar competencias específicas o necesidades urgentes, las sesiones personalizadas ofrecen una oportunidad única para la práctica intensiva y la mejora rápida de tus habilidades lingüísticas.</p>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   <!-- === Soluciones por segmento === -->
   <section class="solutions" aria-label="Soluciones 7Speaking">
@@ -583,47 +1019,80 @@
     </div>
   </section>
 
-  <!-- ================= MISIÓN ================= -->
-  <section class="section muted mission">
-    <div class="watermark" aria-hidden="true"></div>
+  <!-- ================= NUESTRA MISIÓN ================= -->
+  <section class="section mission" id="mision">
     <div class="wrap">
       <h2>Nuestra misión: Acelerar tu éxito</h2>
-      <div class="mission-grid" style="margin-top:18px">
-        <div>
+
+      <div class="mission-grid">
+        <article class="mission-item">
           <h3>Formación continua</h3>
-          <p>Ofrecemos recursos actualizados constantemente para mantener el interés y la motivación de los estudiantes universitarios en su aprendizaje de idiomas.</p>
-          <h3 style="margin-top:22px">Comunicación multilingüe</h3>
-          <p>Facilitamos la adquisición de habilidades comunicativas en múltiples idiomas, esenciales para el desarrollo académico y profesional en el siglo XXI.</p>
-        </div>
-        <div>
+          <p>
+            Ofrecemos recursos actualizados constantemente para mantener el interés y la
+            motivación de los estudiantes universitarios en su aprendizaje de idiomas.
+          </p>
+        </article>
+
+        <article class="mission-item">
           <h3>Desarrollo internacional</h3>
-          <p>Preparamos a los estudiantes para un mundo globalizado, dotándoles de las herramientas lingüísticas necesarias para destacar en entornos internacionales.</p>
-        </div>
+          <p>
+            Preparamos a los estudiantes para un mundo globalizado, dotándoles de las
+            herramientas lingüísticas necesarias para destacar en entornos internacionales.
+          </p>
+        </article>
+
+        <article class="mission-item">
+          <h3>Comunicación multilingüe</h3>
+          <p>
+            Facilitamos la adquisición de habilidades comunicativas en múltiples idiomas,
+            esenciales para el desarrollo académico y profesional en el siglo XXI.
+          </p>
+        </article>
+
+        <p class="mission-foot">
+          En 7Speaking creemos que el dominio de idiomas es fundamental para el éxito académico
+          y profesional de los estudiantes universitarios en un mundo cada vez más conectado.
+        </p>
       </div>
-      <p style="margin-top:22px">En 7Speaking creemos que el dominio de idiomas es fundamental para el éxito académico y profesional de los estudiantes universitarios en un mundo cada vez más conectado.</p>
     </div>
   </section>
 
   <!-- ================= TESTIMONIOS ================= -->
-  <section class="section">
+  <section class="section testimonials">
     <div class="wrap">
       <h2>Testimonios de nuestros usuarios</h2>
-      <div class="quotes" style="margin-top:16px">
-        <blockquote class="quote">
-          <p>"Al principio era muy escéptico, porque sólo hacíamos formación presencial y pasar al aprendizaje digital me daba miedo. Pero hemos recibido muy buenas opiniones de nuestros alumnos. Como Responsable de Formación, contamos con el apoyo de su servicio de atención al cliente. Estoy muy satisfecho."</p>
-          <small>Jeanne – Responsable de formación</small>
-        </blockquote>
-        <blockquote class="quote">
-          <p>"Utilicé mis créditos CPF para acceder a un curso de inglés para principiantes con 7Speaking. Me gustaron mucho las lecciones en vídeo y las clases individuales. Durante las clases, me di cuenta de que los profesores me escuchaban y mi nivel de inglés mejoró considerablemente gracias al curso."</p>
-          <small>Jacques – Responsable de logística</small>
-        </blockquote>
-        <blockquote class="quote">
-          <p>"Estoy encantada con mi experiencia con la plataforma 7Speaking. Me ha encantado poder aprender inglés a través de artículos relacionados con las noticias. Cada semana suben nuevos artículos, así que hay para todos los gustos. Además, su servicio de atención al cliente me ha parecido muy atento y eficaz."</p>
-          <small>Victoire – Gestor de clientes</small>
-        </blockquote>
+
+      <div class="t-grid">
+        <figure class="t-card">
+          <blockquote>
+            Al principio era muy escéptico, porque sólo hacíamos formación presencial y pasar al aprendizaje digital
+            me daba miedo. Pero hemos recibido muy buenas opiniones de nuestros alumnos. Como Responsable de Formación,
+            contamos con el apoyo de su servicio de atención al cliente. Estoy muy satisfecho.
+          </blockquote>
+          <figcaption>Jeanne – Responsable de formación</figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <blockquote>
+            Utilicé mis créditos CPF para acceder a un curso de inglés para principiantes con 7Speaking. Me gustaron mucho
+            las lecciones en vídeo y las clases individuales. Durante las clases, me di cuenta de que los profesores me
+            escuchaban y mi nivel de inglés mejoró considerablemente gracias al curso.
+          </blockquote>
+          <figcaption>Jacques – Responsable de logística</figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <blockquote>
+            Estoy encantada con mi experiencia con la plataforma 7Speaking. Me ha encantado poder aprender inglés a través
+            de artículos relacionados con las noticias. Cada semana suben nuevos artículos, así que hay para todos los gustos.
+            Además, su servicio de atención al cliente me ha parecido muy atento y eficaz.
+          </blockquote>
+          <figcaption>Victoire – Gestor de clientes</figcaption>
+        </figure>
       </div>
     </div>
   </section>
+
 
   <!-- ================= CONFÍAN EN NOSOTROS ================= -->
   <section class="section">
@@ -852,5 +1321,158 @@
       window.addEventListener('resize', setHeroHeight);
     })();
   </script>
+
+  <script>
+  (function(){
+    const burger = document.querySelector('.tb-burger');
+    const nav    = document.getElementById('tb-nav');
+
+    // Toggle menú móvil
+    burger?.addEventListener('click', ()=>{
+      const open = nav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true':'false');
+      document.body.classList.toggle('nav-open', open);
+    });
+
+    // Cerrar al hacer clic en un enlace (móvil)
+    nav?.addEventListener('click', e=>{
+      if(e.target.matches('a')){
+        nav.classList.remove('open');
+        burger.setAttribute('aria-expanded','false');
+        document.body.classList.remove('nav-open');
+      }
+    });
+
+    // Marcar enlace activo por URL
+    const path = location.pathname.replace(/\/+$/,'').toLowerCase();
+    document.querySelectorAll('.tb-link').forEach(a=>{
+      const href = a.getAttribute('href') || '';
+      if(!href) return;
+      const normalized = ('/'+href).replace(/\/+$/,'').toLowerCase();
+      if (path.endsWith(normalized) || (normalized==='/index.html' && (path===''||path==='/'))) {
+        a.setAttribute('aria-current','page');
+      }
+    });
+  })();
+  </script>
+
+  <!-- ===== MODAL ARTÍCULO (reutilizable) ===== -->
+  <style>
+    .article-modal{position:fixed;inset:0;background:rgba(12,18,22,.62);backdrop-filter: blur(6px);
+      display:none; z-index:9999}
+    .article-modal.open{display:block}
+    .article-shell{position:absolute; inset:2.5% 3%; background:#fff; border-radius:16px; overflow:hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25); display:flex; flex-direction:column}
+    .article-bar{display:flex;align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 14px; border-bottom:1px solid #e8e3e1; background:#FFFCF5}
+    .article-title{font:700 1rem/1.1 "Source Sans 3",system-ui; color:#124E73}
+    .article-close{appearance:none;border:1px solid #CBD3D8;background:#fff;border-radius:999px;
+      width:36px;height:36px;cursor:pointer;font-size:20px;display:grid;place-items:center}
+    .article-viewport{position:relative;flex:1; overflow-x:auto; overflow-y:hidden;
+      background:#fff; scroll-snap-type: x mandatory}
+    .article-sheet{display:grid; grid-auto-flow:column; grid-auto-columns: min(560px, 100%);
+      height:100%; gap:20px; padding:18px; align-items:start}
+    .col{scroll-snap-align:start; overflow-y:auto; padding-right:2px}
+    .col h1{font:800 clamp(1.4rem,2.8vw,2rem)/1.15 "MuseoModerno",system-ui; color:#124E73; margin:.2rem 0 .35rem}
+    .col h2{font:700 1.1rem/1.3 "MuseoModerno",system-ui; color:#124E73; margin:.8rem 0 .3rem}
+    .byline{font-weight:700; color:#2b4150; margin:.4rem 0 .6rem}
+    .lead{font-weight:700; margin:.25rem 0 .8rem}
+    .col figure{margin:0 0 .8rem}
+    .col figure img{width:100%; height:auto; display:block; border-radius:12px; border:1px solid #eee}
+    .quote{border-left:4px solid #E63B3F; padding:.6rem .8rem; background:#fff6f6; border-radius:8px; margin:.8rem 0}
+    .author-card{display:flex; gap:12px; align-items:center; margin-top:1rem; padding-top:1rem;
+      border-top:1px dashed #e1dbd9}
+    .author-card img{width:52px; height:52px; border-radius:50%; object-fit:cover; border:1px solid #e9e4e2}
+    .cta-inline{margin-top:.9rem}
+    .cta-inline .btn{background:#325F7B;color:#fff;border-radius:.6rem;padding:.7rem 1rem;font-weight:800}
+    @media (max-width:900px){ .article-shell{inset:4% 3%} .article-sheet{grid-auto-columns: 100%;} }
+    /* --- MODAL: habilitar scroll vertical global --- */
+.article-shell{
+  /* ya lo tienes, sólo aseguro el alto máximo del modal */
+  max-height: 92vh;
+}
+
+/* 1) El viewport debe permitir scroll vertical (y horizontal si haces swipe) */
+.article-viewport{
+  position: relative;
+  flex: 1;
+  overflow: auto;                   /* <— antes: overflow-x:auto; overflow-y:hidden */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;    /* conserva el snap lateral entre columnas */
+  background: #fff;
+}
+
+/* 2) La hoja no debe forzar altura fija; deja que crezca y el viewport haga el scroll */
+.article-sheet{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(560px, 100%);
+  gap: 20px;
+  padding: 18px;
+  align-items: start;
+  height: auto;                     /* <— antes solía estar en 100% */
+  min-height: 100%;
+}
+
+/* 3) Evita scroll interno por columna; así hay una sola barra vertical (en el viewport) */
+.article-sheet .col{
+  overflow: visible;                /* <— antes: overflow-y:auto */
+  padding-right: 2px;               /* mantiene margen para que no roce el borde */
+}
+
+/* Responsive: en móvil una sola columna y scroll vertical natural */
+@media (max-width: 900px){
+  .article-shell{ inset: 4% 3%; }
+  .article-sheet{ grid-auto-columns: 100%; }
+}
+
+  </style>
+
+  <div id="articleModal" class="article-modal" aria-hidden="true">
+    <div class="article-shell" role="dialog" aria-modal="true" aria-labelledby="articleTitle">
+      <div class="article-bar">
+        <div id="articleTitle" class="article-title">Artículo</div>
+        <button class="article-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="article-viewport">
+        <div class="article-sheet" id="articleSlot"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const modal  = document.getElementById('articleModal');
+    const slot   = document.getElementById('articleSlot');
+    const title  = document.getElementById('articleTitle');
+    const closeB = modal.querySelector('.article-close');
+
+    async function openArticle(url, heading){
+      title.textContent = heading || 'Artículo';
+      slot.innerHTML = '<div class="col"><p>Cargando…</p></div>';
+      modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+      try{
+        const res  = await fetch(url, { cache:'no-store' });
+        const html = await res.text();
+        slot.innerHTML = html;
+        modal.querySelector('.article-viewport').scrollTo({left:0, behavior:'instant'});
+      }catch(_){
+        slot.innerHTML = '<div class="col"><p>No se pudo cargar el artículo.</p></div>';
+      }
+    }
+    function closeArticle(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); slot.innerHTML=''; }
+    closeB.addEventListener('click', closeArticle);
+    modal.addEventListener('click', e=>{ if(e.target===modal) closeArticle(); });
+    window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeArticle(); });
+
+    document.addEventListener('click', e=>{
+      const t = e.target.closest('[data-article]');
+      if(!t) return;
+      e.preventDefault();
+      openArticle(t.getAttribute('data-article'), t.getAttribute('data-title') || t.getAttribute('aria-label') || '');
+    });
+  })();
+  </script>
+
 </body>
 </html>
