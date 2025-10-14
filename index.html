@@ -33,6 +33,7 @@
   <link rel="icon" href="favicon.ico" sizes="any" />
 
   <style>
+    
     /* Limpiar estilos heredados de otros temas */
     .article-sheet blockquote, .article-sheet .quote{
       all: unset;
@@ -89,18 +90,18 @@
       min-height:56px; gap:16px;
     }
 
-    /* Logo */
-    .tb-logo{
-      display:inline-flex; align-items:center; gap:8px;
-      text-decoration:none; color:var(--tb-ink); font-weight:800;
-      font-family:"MuseoModerno",system-ui; font-size:1.15rem;
-      letter-spacing:.2px;
+    /* Evitar estirado del logo en la topbar */
+    .tb-logo {
+      display: inline-block;
+      line-height: 0; /* elimina espacio bajo la imagen */
     }
-    .tb-logo span{
-      display:inline-grid; place-items:center;
-      width:26px; height:26px; border-radius:7px;
-      background:#e63b3f; color:white; font-weight:900;
-      box-shadow:0 1px 0 rgba(0,0,0,.25);
+
+    .tb-logo__img {
+      display: block;
+      max-height: 48px; /* ajusta según la altura de la barra */
+      width: auto;
+      height: auto;
+      object-fit: contain;
     }
 
     /* Nav */
@@ -704,8 +705,8 @@
 <header class="topbar" role="banner">
   <div class="tb-wrap">
     <!-- Logo (puedes reemplazar por <img ...>) -->
-    <a class="tb-logo" href="index.html" aria-label="7Speaking">
-      <span>7</span>Speaking
+    <a class="tb-logo" href="/index.html" aria-label="7Speaking">
+      <img src="/assets/img/7speaking_FR_logo_nobg.png" alt="7Speaking" class="tb-logo__img">
     </a>
 
     <!-- Botón hamburguesa (móvil) -->

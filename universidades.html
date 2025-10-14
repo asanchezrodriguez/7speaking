@@ -37,6 +37,20 @@
     .crumbs{font-size:.95rem;opacity:.85;margin:6px 0 0}
     .crumbs a{color:var(--accent);text-decoration:none}
     .crumbs a:hover{text-decoration:underline}
+    
+    /* Evitar estirado del logo en la topbar */
+    .tb-logo {
+      display: inline-block;
+      line-height: 0; /* elimina espacio bajo la imagen */
+    }
+
+    .tb-logo__img {
+      display: block;
+      max-height: 48px; /* ajusta según la altura de la barra */
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
 
     /* ===== Hero slider ===== */
     header.hero{padding-block: clamp(12px,2.2vw,20px) 0;}
