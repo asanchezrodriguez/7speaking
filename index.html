@@ -75,7 +75,7 @@
       --tb-bg:#0f1214;        /* fondo oscuro */
       --tb-ink:#e8eef2;       /* texto principal */
       --tb-ink-dim:#b9c3ca;   /* texto tenue */
-      --tb-accent:#19c463;    /* verde CTA */
+      --tb-accent:#E63B3F;    /* verde CTA */
       --tb-line:#2a3136;      /* línea separadora inferior */
     }
 
@@ -126,11 +126,50 @@
       font-weight:700; color:var(--tb-ink-dim);
     }
     .tb-cta{
-      display:inline-block; text-decoration:none; font-weight:800; color:#0d1a12;
+      display:inline-block; text-decoration:none; font-weight:800; color:#e8eef2;
       background:var(--tb-accent); padding:.55rem .9rem; border-radius:999px;
       box-shadow:0 2px 0 rgba(0,0,0,.15);
     }
     .tb-cta:hover{ filter:brightness(1.05); }
+
+    /* Centrar y estrechar el bloque de botones */
+    .cta-centered{
+      justify-content: center;         /* centra los botones */
+      gap: 14px;
+      flex-wrap: wrap;
+      max-width: 640px;                /* hace que la fila no sea muy ancha */
+      margin-inline: auto;             /* centra la fila completa */
+    }
+
+    /* Unifica apariencia entre los tres botones */
+    .cta-centered .btn,
+    .cta-centered .store-btn{
+      display: inline-block;
+      font-weight: 700;
+      border-radius: 0.6rem;
+      padding: 0.8rem 1.4rem;
+      font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta-centered .btn:hover,
+    .cta-centered .store-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+
+    /* Botón rojo tienda (estilo 7Speaking) */
+    .store-btn{
+      background: #E63B3F;
+      color: #fff;
+      border: none;
+    }
+    .store-btn:hover{
+      filter: brightness(1.05);
+    }
+
 
     /* Burger (móvil) */
     .tb-burger{
@@ -723,7 +762,7 @@
 
       <div class="tb-right">
         <div class="tb-lang" aria-label="Idioma actual">ES</div>
-        <a class="tb-cta" href="https://shop.intelixs.com" target="_blank" rel="noopener">Inscribirme</a>
+        <a class="tb-cta" href="https://shop.intelixs.com" target="_blank" rel="noopener">Tienda en línea</a>
       </div>
     </nav>
   </div>
@@ -742,7 +781,7 @@
           <p>Descubre una nueva forma de aprender idiomas que se adapta a tu ritmo y necesidades.</p>
           <div class="cta">
             <a href="#" class="btn primary js-open-contact">Contacta con nuestros expertos</a>
-            <a href="#" class="btn outline js-open-contact">Solicita una demostración</a>
+            <a class="btn store-btn" href="https://shop.intelixs.com" target="_blank" rel="noopener">Tienda en línea</a>
           </div>
         </div>
         <figure class="hero-figure">
@@ -759,6 +798,7 @@
           <p class="lead">Programas modernos, contenidos reales y resultados medibles.</p>
           <div class="cta">
             <a href="#" class="btn primary js-open-contact">Quiero conocer 7Speaking</a>
+            <a class="btn store-btn" href="https://shop.intelixs.com" target="_blank" rel="noopener">Tienda en línea</a>
           </div>
         </div>
         <figure class="hero-figure">
@@ -1089,9 +1129,10 @@
       <h2 style="margin-top:28px">Descubre nuestros programas de formación personalizados para estudiantes universitarios</h2>
       <p>Únete a las miles de instituciones educativas y estudiantes que ya han transformado su aprendizaje de idiomas con 7Speaking. Nuestros programas están diseñados para adaptarse a las necesidades específicas de los jóvenes universitarios, proporcionándoles las herramientas lingüísticas necesarias para destacar en un mundo globalizado.</p>
 
-      <div class="cta-row" style="margin-top:12px">
+      <div class="cta-row cta-centered">
         <a class="btn outline" href="#" onclick="document.querySelector('.js-open-contact').click()">Prueba 7Speaking</a>
         <a class="btn primary js-open-contact" href="#">Contacta con nosotros</a>
+        <a class="btn store-btn" href="https://shop.intelixs.com" target="_blank" rel="noopener">Tienda en línea</a>
       </div>
     </div>
   </section>
