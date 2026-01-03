@@ -1,6 +1,10 @@
 Deployment ID
-AKfycbx3fAOS-V-ADhadR1pAyxkAHKp_uDdbF8oiBm20wCSyL3UccozpYiyJ1KkMVMY_83Eu
+AKfycbzBjrWs8DTT2rinDE7-LeIZ4XaqGcLIDOAk_ZywjUh-cD3YyWKLmF9NXziz3cyuRQKD
 
 Web app
 URL
-https://script.google.com/macros/s/AKfycbx3fAOS-V-ADhadR1pAyxkAHKp_uDdbF8oiBm20wCSyL3UccozpYiyJ1KkMVMY_83Eu/exec
+https://script.google.com/macros/s/AKfycbzBjrWs8DTT2rinDE7-LeIZ4XaqGcLIDOAk_ZywjUh-cD3YyWKLmF9NXziz3cyuRQKD/exec
+
+Notes:
+- Includes email notifications to aminael.iv@gmail.com
+- Updated: 2026-01-02
