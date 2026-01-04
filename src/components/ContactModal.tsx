@@ -2,6 +2,7 @@ import React from 'react';
 import { X } from 'lucide-react';
 import { Button } from './Button';
 import { copy } from '../content/copy-es';
+import { useFlowStore } from '../store/flowStore';
 
 interface ContactModalProps {
     isOpen: boolean;
@@ -19,21 +20,38 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
 
+    const { utm } = useFlowStore();
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
         try {
-            // Google Apps Script URL from old webpage
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwYOUR_SCRIPT_ID/exec';
+            // Google Apps Script URL
+            const scriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzBjrWs8DTT2rinDE7-LeIZ4XaqGcLIDOAk_ZywjUh-cD3YyWKLmF9NXziz3cyuRQKD/exec';
+
+            // Mapping frontend data to match the script expectations (Spanish fields)
+            const payload = {
+                nombre: formData.name,
+                email: formData.email,
+                telefono: formData.phone,
+                empresa: formData.company,
+                mensaje: formData.message,
+                fuente: 'web-intelixs',
+                url: window.location.href,
+                utm_source: utm?.utm_source || '',
+                utm_medium: utm?.utm_medium || '',
+                utm_campaign: utm?.utm_campaign || '',
+                user_agent: navigator.userAgent
+            };
 
             await fetch(scriptUrl, {
                 method: 'POST',
-                mode: 'no-cors',
+                mode: 'no-cors', // Apps Script requires no-cors for simple redirects
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(payload),
             });
 
             setSubmitStatus('success');
@@ -43,6 +61,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                 setSubmitStatus('idle');
             }, 2000);
         } catch (error) {
+            console.error('Contact form error:', error);
             setSubmitStatus('error');
         } finally {
             setIsSubmitting(false);
