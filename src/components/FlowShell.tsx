@@ -7,6 +7,7 @@ import { Button } from './Button';
 import { ContactModal } from './ContactModal';
 import { copy } from '../content/copy-es';
 import { config } from '../config';
+import { AIAssistant } from './AIAssistant';
 
 interface FlowShellProps {
     children: React.ReactNode;
@@ -168,6 +169,9 @@ export const FlowShell: React.FC<FlowShellProps> = ({
 
             {/* Contact Modal */}
             <ContactModal isOpen={showContactModal} onClose={() => setShowContactModal(false)} />
+
+            {/* AI Assistant */}
+            <AIAssistant />
         </div>
     );
 };
