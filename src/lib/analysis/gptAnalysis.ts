@@ -84,7 +84,7 @@ Provide a comprehensive analysis in JSON format with the following structure:
     "accuracy": <0-100 value based on word correctness>,
     "fluency": <0-100 value based on flow and speed>,
     "words": [
-       { "word": "word", "startTime": 0.0, "endTime": 0.1, "isHesitation": boolean, "isHighConfidence": boolean }
+       { "word": "word", "isHesitation": boolean, "isHighConfidence": boolean }
     ]
   },
   "blueprint": {
@@ -140,7 +140,7 @@ IMPORTANT:
             messages: [
                 {
                     role: 'system',
-                    content: 'You are an expert language assessment AI with a warm, encouraging personality. Always respond with valid JSON only.',
+                    content: 'You are an expert language assessment AI. Respond ONLY with valid JSON. Be concise but thorough.',
                 },
                 {
                     role: 'user',
@@ -148,7 +148,7 @@ IMPORTANT:
                 },
             ],
             temperature: 0.7,
-            max_tokens: 1500,
+            max_tokens: 4000, // Increased to handle long transcripts with word metadata
             response_format: { type: 'json_object' },
         });
 
@@ -158,14 +158,27 @@ IMPORTANT:
             throw new Error('No response from GPT');
         }
 
-        console.log('[GPT Analysis] Raw response received');
-        const result = JSON.parse(content) as GPTAnalysisResult;
+        console.log('[GPT Analysis] Raw response received, length:', content.length);
+
+        let result: GPTAnalysisResult;
+        try {
+            result = JSON.parse(content) as GPTAnalysisResult;
+        } catch (e) {
+            console.error('[GPT Analysis] JSON Parse Error. First 100 chars:', content.substring(0, 100));
+            console.error('[GPT Analysis] Last 100 chars:', content.substring(content.length - 100));
+            throw e;
+        }
 
         // Populate word timestamps from original voiceData if available
         if (voiceData && result.pronunciation) {
-            console.log('[GPT Analysis] Mapping word timestamps...');
-            result.pronunciation.words = voiceData.words.map(vw => {
-                const gptWord = result.pronunciation?.words.find(gw => gw.word.toLowerCase() === vw.word.toLowerCase());
+            console.log('[GPT Analysis] Mapping word timestamps for', voiceData.words.length, 'words');
+            result.pronunciation.words = voiceData.words.map((vw, index) => {
+                // Try to find the corresponding word in the GPT response
+                // If GPT returned an array of the same length, we use index. 
+                // Otherwise we search by word.
+                const gptWord = result.pronunciation?.words[index] ||
+                    result.pronunciation?.words.find(gw => gw.word.toLowerCase() === vw.word.toLowerCase());
+
                 return {
                     word: vw.word,
                     startTime: vw.start,
