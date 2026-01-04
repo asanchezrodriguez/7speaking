@@ -30,6 +30,13 @@ interface FlowState {
     // Email capture
     email: string;
 
+    // Security & Usage
+    usage: {
+        recordings: number;
+        assessments: number;
+        assistantMessages: number;
+    };
+
     // Actions
     setScreen: (screen: number) => void;
     nextScreen: () => void;
@@ -43,6 +50,9 @@ interface FlowState {
     setVoiceData: (data: { duration: number; words: Array<{ word: string, start: number, end: number }> } | null) => void;
     setAnalysisResult: (result: AnalysisResult) => void;
     setEmail: (email: string) => void;
+
+    // Usage Actions
+    incrementUsage: (type: 'recordings' | 'assessments' | 'assistantMessages') => void;
     reset: () => void;
 }
 
@@ -67,6 +77,11 @@ export const useFlowStore = create<FlowState>()(
             voiceData: null,
             analysisResult: null,
             email: '',
+            usage: {
+                recordings: 0,
+                assessments: 0,
+                assistantMessages: 0,
+            },
 
             // Actions
             setScreen: (screen) => set({ currentScreen: screen }),
@@ -95,6 +110,13 @@ export const useFlowStore = create<FlowState>()(
 
             setEmail: (email) => set({ email }),
 
+            incrementUsage: (type) => set((state) => ({
+                usage: {
+                    ...state.usage,
+                    [type]: state.usage[type] + 1
+                }
+            })),
+
             reset: () => set({
                 currentScreen: 0,
                 sessionId: generateSessionId(),
@@ -109,6 +131,11 @@ export const useFlowStore = create<FlowState>()(
                 voiceData: null,
                 analysisResult: null,
                 email: '',
+                usage: {
+                    recordings: 0,
+                    assessments: 0,
+                    assistantMessages: 0,
+                },
             }),
         }),
         {

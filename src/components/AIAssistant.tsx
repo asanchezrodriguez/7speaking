@@ -1,16 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Loader2, Sparkles } from 'lucide-react';
+import { useFlowStore } from '../store/flowStore';
 import { getAssistantResponse } from '../lib/analysis/assistantLogic';
 import type { AssistantMessage } from '../lib/analysis/assistantLogic';
 
 export const AIAssistant: React.FC = () => {
+    const { usage, incrementUsage } = useFlowStore();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<AssistantMessage[]>([
         { role: 'assistant', content: '¡Hola! Soy tu Asistente IA de Intelixs. ¿En qué puedo ayudarte hoy sobre tu experiencia con 7Speaking o nuestra tienda?' }
     ]);
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [limitReached, setLimitReached] = useState(usage.assistantMessages >= 10);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -24,7 +27,7 @@ export const AIAssistant: React.FC = () => {
     }, [messages, isOpen]);
 
     const handleSend = async () => {
-        if (!inputValue.trim() || isLoading) return;
+        if (!inputValue.trim() || isLoading || limitReached) return;
 
         const userMessage: AssistantMessage = { role: 'user', content: inputValue };
         setMessages(prev => [...prev, userMessage]);
@@ -34,6 +37,12 @@ export const AIAssistant: React.FC = () => {
         try {
             const response = await getAssistantResponse([...messages, userMessage]);
             setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+            incrementUsage('assistantMessages');
+
+            if (usage.assistantMessages + 1 >= 10) {
+                setLimitReached(true);
+                setMessages(prev => [...prev, { role: 'assistant', content: 'Has alcanzado el límite de mensajes permitidos para esta sesión de consulta rápida. Si necesitas más ayuda, por favor usa el botón de contacto.' }]);
+            }
         } catch (error) {
             setMessages(prev => [...prev, { role: 'assistant', content: 'Lo siento, hubo un error técnico. Por favor intenta de nuevo.' }]);
         } finally {
@@ -108,12 +117,13 @@ export const AIAssistant: React.FC = () => {
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
                                     onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                    placeholder="Escribe tu duda aquí..."
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-intelixs-blue-500/50 transition-colors"
+                                    placeholder={limitReached ? "Límite alcanzado" : "Escribe tu duda aquí..."}
+                                    disabled={limitReached}
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-intelixs-blue-500/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
                                 <button
                                     onClick={handleSend}
-                                    disabled={!inputValue.trim() || isLoading}
+                                    disabled={!inputValue.trim() || isLoading || limitReached}
                                     className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-intelixs-blue-500 hover:text-intelixs-blue-400 disabled:text-neutral-600 transition-colors"
                                 >
                                     <Send size={18} />

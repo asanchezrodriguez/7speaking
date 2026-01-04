@@ -21,7 +21,8 @@ export const Screen5Processing: React.FC = () => {
         selectedLanguage,
         inputMode,
         voiceData,
-        setAnalysisResult
+        setAnalysisResult,
+        incrementUsage
     } = useFlowStore();
 
     const [error, setError] = useState<string | null>(null);
@@ -66,6 +67,7 @@ export const Screen5Processing: React.FC = () => {
                 };
 
                 setAnalysisResult(result);
+                incrementUsage('assessments');
 
                 // Small delay to show the processing screen
                 await new Promise(resolve => setTimeout(resolve, 1500));

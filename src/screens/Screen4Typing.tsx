@@ -6,15 +6,17 @@ import { config } from '../config';
 import { analytics } from '../lib/analytics/tracker';
 
 export const Screen4Typing: React.FC = () => {
-    const { nextScreen, setTranscript } = useFlowStore();
+    const { nextScreen, setTranscript, usage } = useFlowStore();
     const [text, setText] = useState('');
     const [showWarning, setShowWarning] = useState(false);
+    const limitReached = usage.assessments >= 3;
 
     const wordCount = text.trim().split(/\s+/).filter(w => w.length > 0).length;
     const minWords = config.analysis.minWords;
-    const canContinue = wordCount >= minWords;
+    const canContinue = wordCount >= minWords && !limitReached;
 
     const handleContinue = () => {
+        if (limitReached) return;
         if (!canContinue) {
             setShowWarning(true);
             return;
@@ -58,6 +60,14 @@ export const Screen4Typing: React.FC = () => {
                     <p className="text-red-400 text-sm text-center animate-fade-in">
                         {copy.screen4Typing.minWordsWarning}
                     </p>
+                )}
+
+                {limitReached && (
+                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-center">
+                        <p className="text-red-400 text-sm">
+                            Has alcanzado el límite de evaluaciones permitidas en esta sesión.
+                        </p>
+                    </div>
                 )}
             </div>
 
