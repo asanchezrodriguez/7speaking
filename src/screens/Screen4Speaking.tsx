@@ -4,32 +4,26 @@ import { copy } from '../content/copy-es';
 import { useFlowStore } from '../store/flowStore';
 import { Button } from '../components/Button';
 import { VoiceRecorder } from '../lib/voice/recorder';
-import { SpeechTranscriber } from '../lib/voice/transcription';
+import { AzureWhisperService } from '../lib/voice/azureWhisper';
 import { config } from '../config';
 import { analytics } from '../lib/analytics/tracker';
 
 export const Screen4Speaking: React.FC = () => {
-    const { nextScreen, setTranscript, setAudioDuration, setInputMode } = useFlowStore();
+    const { nextScreen, setTranscript, setAudioDuration, setInputMode, setVoiceData } = useFlowStore();
     const [isRecording, setIsRecording] = useState(false);
     const [timeLeft, setTimeLeft] = useState<number>(config.voice.maxDurationSeconds);
     const [showHelper, setShowHelper] = useState(false);
-    const [currentTranscript, setCurrentTranscript] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [isInitializing, setIsInitializing] = useState(true);
+    const [isTranscribing, setIsTranscribing] = useState(false);
 
     const recorderRef = useRef<VoiceRecorder | null>(null);
-    const transcriberRef = useRef<SpeechTranscriber | null>(null);
+    const whisperService = useRef(new AzureWhisperService());
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        // Initialize recorder and transcriber
+        // Initialize recorder
         recorderRef.current = new VoiceRecorder();
-        transcriberRef.current = new SpeechTranscriber();
-
-        // Check if speech recognition is supported
-        if (!transcriberRef.current.isSupported()) {
-            console.warn('Speech recognition not supported, transcript will be empty');
-        }
 
         // Request microphone permission and start recording
         const initRecording = async () => {
@@ -43,14 +37,6 @@ export const Screen4Speaking: React.FC = () => {
 
                 // Start recording
                 await recorderRef.current!.startRecording();
-
-                // Start transcription if supported
-                if (transcriberRef.current!.isSupported()) {
-                    transcriberRef.current!.start(
-                        (text) => setCurrentTranscript(text),
-                        (err) => console.error('Transcription error:', err)
-                    );
-                }
 
                 setIsRecording(true);
                 setIsInitializing(false);
@@ -81,38 +67,59 @@ export const Screen4Speaking: React.FC = () => {
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
             if (recorderRef.current) recorderRef.current.cleanup();
-            if (transcriberRef.current) transcriberRef.current.stop();
         };
     }, []);
 
-    const handleStop = () => {
-        if (!isRecording) return;
+    const handleStop = async () => {
+        if (!isRecording || isTranscribing) return;
 
         setIsRecording(false);
+        setIsTranscribing(true);
 
         if (timerRef.current) {
             clearInterval(timerRef.current);
         }
 
-        const duration = recorderRef.current?.stopRecording() || 0;
-        const finalTranscript = transcriberRef.current?.stop() || currentTranscript;
+        try {
+            // Get final audio and duration
+            const duration = recorderRef.current?.stopRecording() || 0;
 
-        setTranscript(finalTranscript);
-        setAudioDuration(duration);
+            // Wait for the dataavailable event to finish
+            await new Promise(resolve => setTimeout(resolve, 500));
 
-        analytics.track('voice_recording_completed', {
-            duration,
-            transcriptLength: finalTranscript.length
-        });
+            const audioBlob = recorderRef.current!.getAudioBlob();
 
-        // Move to processing screen
-        nextScreen();
+            // Transcribe with Azure Whisper
+            const whisperResult = await whisperService.current.transcribe(audioBlob);
+
+            setTranscript(whisperResult.text);
+            setAudioDuration(duration);
+            setVoiceData({
+                duration: whisperResult.duration,
+                words: whisperResult.words.map(w => ({
+                    word: w.word,
+                    start: w.start,
+                    end: w.end
+                }))
+            });
+
+            analytics.track('voice_recording_completed', {
+                duration,
+                transcriptLength: whisperResult.text.length
+            });
+
+            // Move to processing screen
+            nextScreen();
+        } catch (err) {
+            console.error('Transcription error:', err);
+            setError('Error al procesar tu voz. Por favor intenta de nuevo.');
+            setIsTranscribing(false);
+        }
     };
 
     const handleSwitchToTyping = () => {
         if (timerRef.current) clearInterval(timerRef.current);
         if (recorderRef.current) recorderRef.current.cleanup();
-        if (transcriberRef.current) transcriberRef.current.stop();
 
         setInputMode('typing');
         analytics.track('switched_to_typing_from_voice');
@@ -135,6 +142,16 @@ export const Screen4Speaking: React.FC = () => {
             <div className="text-center space-y-6">
                 <Loader2 className="w-12 h-12 mx-auto animate-spin text-intelixs-blue-500" />
                 <p className="text-neutral-400">Preparando micrófono...</p>
+            </div>
+        );
+    }
+
+    if (isTranscribing) {
+        return (
+            <div className="text-center space-y-6">
+                <Loader2 className="w-12 h-12 mx-auto animate-spin text-intelixs-blue-500" />
+                <p className="text-xl font-medium text-white">Analizando tu voz...</p>
+                <p className="text-neutral-400">Generando tu radiografía de pronunciación.</p>
             </div>
         );
     }

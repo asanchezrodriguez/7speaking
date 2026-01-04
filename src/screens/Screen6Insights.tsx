@@ -3,6 +3,7 @@ import { copy } from '../content/copy-es';
 import { useFlowStore } from '../store/flowStore';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
+import { XRayAnalysis } from '../components/XRayAnalysis';
 
 export const Screen6Insights: React.FC = () => {
     const { nextScreen, analysisResult, selectedLanguage } = useFlowStore();
@@ -15,18 +16,23 @@ export const Screen6Insights: React.FC = () => {
         );
     }
 
-    const { insights, percentile, personalMessage } = analysisResult;
+    const { insights, percentile, personalMessage, pronunciation } = analysisResult;
 
     // Get language name from selected language
     const languageName = selectedLanguage || 'inglés';
 
     return (
-        <div className="space-y-8 max-w-3xl mx-auto">
+        <div className="space-y-8 max-w-3xl mx-auto pb-12">
             <div className="text-center space-y-2">
                 <h2 className="text-3xl md:text-4xl font-semibold">
                     {copy.screen6.headline}
                 </h2>
             </div>
+
+            {/* X-Ray Analysis - WOW Effect */}
+            {pronunciation && (
+                <XRayAnalysis pronunciation={pronunciation} />
+            )}
 
             {/* AI-Generated Personal Message - Highlighted */}
             {personalMessage && (

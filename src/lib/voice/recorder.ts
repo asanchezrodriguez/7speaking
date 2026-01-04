@@ -53,6 +53,10 @@ export class VoiceRecorder {
         return duration;
     }
 
+    getAudioBlob(): Blob {
+        return new Blob(this.audioChunks, { type: 'audio/webm' });
+    }
+
     cleanup() {
         if (this.stream) {
             this.stream.getTracks().forEach(track => track.stop());

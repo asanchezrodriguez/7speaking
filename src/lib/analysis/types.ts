@@ -26,6 +26,18 @@ export interface AnalysisResult {
         blocker: string;
         learningStyle: string;
     };
+    pronunciation?: {
+        score: number;
+        accuracy: number;
+        fluency: number;
+        words: Array<{
+            word: string;
+            startTime: number;
+            endTime: number;
+            isHesitation?: boolean;
+            isHighConfidence?: boolean;
+        }>;
+    };
     personalMessage?: string; // AI-generated comprehensive message
     blueprint: {
         stopDoing: string;

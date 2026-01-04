@@ -20,6 +20,7 @@ export const Screen5Processing: React.FC = () => {
         selectedIntent,
         selectedLanguage,
         inputMode,
+        voiceData,
         setAnalysisResult
     } = useFlowStore();
 
@@ -33,7 +34,11 @@ export const Screen5Processing: React.FC = () => {
         const processAnalysis = async () => {
             try {
                 // Use GPT-4o for analysis
-                const gptResult = await analyzeWithGPT(transcript, selectedLanguage || 'inglés');
+                const gptResult = await analyzeWithGPT(
+                    transcript,
+                    selectedLanguage || 'inglés',
+                    voiceData || undefined
+                );
 
                 // Also get basic metrics for reference
                 const metrics = analyzeText(transcript, audioDuration || 60);
@@ -54,6 +59,7 @@ export const Screen5Processing: React.FC = () => {
                         blocker: gptResult.blocker,
                         learningStyle: gptResult.learningStyle,
                     },
+                    pronunciation: gptResult.pronunciation,
                     personalMessage: gptResult.personalMessage,
                     blueprint: gptResult.blueprint, // AI-generated personalized blueprint
                     recommendedNextStep: buildStoreUrlWithUTM(config.storeUrl, utm),

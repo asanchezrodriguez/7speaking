@@ -19,6 +19,10 @@ interface FlowState {
     inputMode: 'voice' | 'typing' | null;
     transcript: string;
     audioDuration: number;
+    voiceData: {
+        duration: number;
+        words: Array<{ word: string, start: number, end: number }>;
+    } | null;
 
     // Analysis results
     analysisResult: AnalysisResult | null;
@@ -36,6 +40,7 @@ interface FlowState {
     setInputMode: (mode: 'voice' | 'typing') => void;
     setTranscript: (transcript: string) => void;
     setAudioDuration: (duration: number) => void;
+    setVoiceData: (data: { duration: number; words: Array<{ word: string, start: number, end: number }> } | null) => void;
     setAnalysisResult: (result: AnalysisResult) => void;
     setEmail: (email: string) => void;
     reset: () => void;
@@ -59,6 +64,7 @@ export const useFlowStore = create<FlowState>()(
             inputMode: null,
             transcript: '',
             audioDuration: 0,
+            voiceData: null,
             analysisResult: null,
             email: '',
 
@@ -84,7 +90,7 @@ export const useFlowStore = create<FlowState>()(
             setTranscript: (transcript) => set({ transcript }),
 
             setAudioDuration: (duration) => set({ audioDuration: duration }),
-
+            setVoiceData: (data) => set({ voiceData: data }),
             setAnalysisResult: (result) => set({ analysisResult: result }),
 
             setEmail: (email) => set({ email }),
@@ -100,6 +106,7 @@ export const useFlowStore = create<FlowState>()(
                 inputMode: null,
                 transcript: '',
                 audioDuration: 0,
+                voiceData: null,
                 analysisResult: null,
                 email: '',
             }),
