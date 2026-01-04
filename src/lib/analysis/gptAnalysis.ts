@@ -42,8 +42,15 @@ export async function analyzeWithGPT(
         words: Array<{ word: string, start: number, end: number }>
     }
 ): Promise<GPTAnalysisResult> {
+    console.log('[GPT Analysis] Starting analysis with:', {
+        transcriptLength: transcript.length,
+        hasVoiceData: !!voiceData,
+        voiceDuration: voiceData?.duration,
+        wordCount: voiceData?.words.length
+    });
+
     const voiceContext = voiceData ? `
-The text was provided via VOICE recording. 
+The text was provided via VOICE recording.
 - Total Duration: ${voiceData.duration}s
 - Average Speed: ${(voiceData.words.length / (voiceData.duration / 60)).toFixed(1)} words per minute.
 - Word timing details are available.
@@ -120,13 +127,16 @@ IMPORTANT:
 
         const content = response.choices[0]?.message?.content;
         if (!content) {
+            console.error('[GPT Analysis] Empty response content');
             throw new Error('No response from GPT');
         }
 
+        console.log('[GPT Analysis] Raw response received');
         const result = JSON.parse(content) as GPTAnalysisResult;
 
         // Populate word timestamps from original voiceData if available
         if (voiceData && result.pronunciation) {
+            console.log('[GPT Analysis] Mapping word timestamps...');
             result.pronunciation.words = voiceData.words.map(vw => {
                 const gptWord = result.pronunciation?.words.find(gw => gw.word.toLowerCase() === vw.word.toLowerCase());
                 return {

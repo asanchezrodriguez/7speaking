@@ -40,6 +40,11 @@ export class AzureWhisperService {
         // Assuming Cognitive Services REST API for Whisper:
         const url = `${this.endpoint}/openai/deployments/${this.deployment}/audio/transcriptions?api-version=${this.apiVersion}`;
 
+        console.log('[Azure Whisper] Starting transcription...', {
+            audioSize: audioBlob.size,
+            audioType: audioBlob.type
+        });
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -50,10 +55,16 @@ export class AzureWhisperService {
 
         if (!response.ok) {
             const error = await response.text();
-            console.error('Whisper API Error:', error);
+            console.error('[Azure Whisper] API Error:', {
+                status: response.status,
+                text: response.statusText,
+                body: error
+            });
             throw new Error(`Failed to transcribe audio: ${response.statusText}`);
         }
 
-        return await response.json();
+        const data = await response.json();
+        console.log('[Azure Whisper] Transcription completed successfully');
+        return data;
     }
 }

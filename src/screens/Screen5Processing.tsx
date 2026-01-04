@@ -65,6 +65,7 @@ export const Screen5Processing: React.FC = () => {
                     recommendedNextStep: buildStoreUrlWithUTM(config.storeUrl, utm),
                 };
 
+                console.log('[Processing] Analysis result generated:', result);
                 setAnalysisResult(result);
 
                 // Small delay to show the processing screen
