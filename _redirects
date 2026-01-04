@@ -1,2 +1,0 @@
-/shop      https://shop.7speaking.lat  301
-/shop/*    https://shop.7speaking.lat/:splat  301
