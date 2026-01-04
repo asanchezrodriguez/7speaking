@@ -141,6 +141,8 @@ export const useFlowStore = create<FlowState>()(
         {
             name: 'intelixs-flow-storage',
             partialize: (state) => ({
+                currentScreen: state.currentScreen,
+                usage: state.usage,
                 sessionId: state.sessionId,
                 startedAt: state.startedAt,
                 utm: state.utm,

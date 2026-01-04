@@ -54,7 +54,8 @@ export const Screen4Speaking: React.FC = () => {
                 timerRef.current = setInterval(() => {
                     setTimeLeft((prev: number) => {
                         if (prev <= 1) {
-                            handleStop();
+                            if (timerRef.current) clearInterval(timerRef.current);
+                            handleStop('timeout');
                             return 0;
                         }
                         return prev - 1;
@@ -78,7 +79,7 @@ export const Screen4Speaking: React.FC = () => {
         };
     }, []);
 
-    const handleStop = async () => {
+    const handleStop = async (reason: 'manual' | 'timeout' = 'manual') => {
         if (!isRecording || isTranscribing) return;
 
         setIsRecording(false);
@@ -113,7 +114,8 @@ export const Screen4Speaking: React.FC = () => {
 
             analytics.track('voice_recording_completed', {
                 duration,
-                transcriptLength: whisperResult.text.length
+                transcriptLength: whisperResult.text.length,
+                reason
             });
 
             incrementUsage('recordings');
@@ -222,7 +224,7 @@ export const Screen4Speaking: React.FC = () => {
             <div className="pt-4">
                 <Button
                     variant="secondary"
-                    onClick={handleStop}
+                    onClick={() => handleStop('manual')}
                     className="text-lg px-8 py-4 flex items-center gap-2 mx-auto"
                 >
                     <MicOff size={20} />
