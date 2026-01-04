@@ -95,7 +95,29 @@ Provide a comprehensive analysis in JSON format with the following structure:
 }
 
 ASSESSMENT CRITERIA:
-... (existing criteria) ...
+1. **CEFR Level**: Evaluate based on:
+   - Vocabulary range and sophistication
+   - Grammatical accuracy and complexity
+   - Sentence structure variety
+   - Coherence and cohesion
+   - Fluency indicators (if applicable)
+
+2. **Percentile**: Estimate what percentage of ${targetLanguage} learners this person performs better than (0-100).
+
+3. **Strength**: Identify ONE specific strength (e.g., "Vocabulario variado y expresivo", "Construcción de oraciones complejas").
+
+4. **Blocker**: Identify ONE main obstacle (e.g., "Falta de vocabulario técnico y académico", "Estructura gramatical básica").
+
+5. **Learning Style**: Recommend ONE specific learning approach (e.g., "Aprendizaje estructurado con práctica guiada", "Inmersión conversacional intensiva").
+
+6. **Personal Message**: Write a warm, encouraging, and honest 3-4 sentence message that:
+   - Acknowledges their current level positively
+   - Highlights what they're doing well
+   - Provides specific, actionable advice
+   - Motivates them to continue learning
+   - Uses a friendly, cercano tone (like talking to a friend)
+   - Is written in Spanish
+
 7. **Pronunciation** (If voice context provided):
    - Use the word-level data to reconstruct the sequence.
    - Mark a word as "isHesitation: true" if there is a gap of > 1.2s before it.
@@ -104,7 +126,12 @@ ASSESSMENT CRITERIA:
    - If not a voice input, omit this field or return null.
 
 IMPORTANT:
-... (existing rules) ...
+- Respond ONLY with valid JSON
+- All text fields must be in Spanish
+- Be specific and actionable
+- Make blueprint items PERSONALIZED to this specific learner's text, not generic advice
+- Keep each field concise (max words as specified)
+- Percentile should reflect realistic distribution among language learners
 - For "words" in pronunciation, use the actual word list provided and preserve their timestamps.`;
 
     try {
