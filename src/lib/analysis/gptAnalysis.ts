@@ -42,13 +42,6 @@ export async function analyzeWithGPT(
         words: Array<{ word: string, start: number, end: number }>
     }
 ): Promise<GPTAnalysisResult> {
-    console.log('[GPT Analysis] Starting analysis with:', {
-        transcriptLength: transcript.length,
-        hasVoiceData: !!voiceData,
-        voiceDuration: voiceData?.duration,
-        wordCount: voiceData?.words.length
-    });
-
     const voiceContext = voiceData ? `
 The text was provided via VOICE recording.
 - Total Duration: ${voiceData.duration}s
@@ -154,24 +147,13 @@ IMPORTANT:
 
         const content = response.choices[0]?.message?.content;
         if (!content) {
-            console.error('[GPT Analysis] Empty response content');
             throw new Error('No response from GPT');
         }
 
-        console.log('[GPT Analysis] Raw response received, length:', content.length);
-
-        let result: GPTAnalysisResult;
-        try {
-            result = JSON.parse(content) as GPTAnalysisResult;
-        } catch (e) {
-            console.error('[GPT Analysis] JSON Parse Error. First 100 chars:', content.substring(0, 100));
-            console.error('[GPT Analysis] Last 100 chars:', content.substring(content.length - 100));
-            throw e;
-        }
+        const result = JSON.parse(content) as GPTAnalysisResult;
 
         // Populate word timestamps from original voiceData if available
         if (voiceData && result.pronunciation) {
-            console.log('[GPT Analysis] Mapping word timestamps for', voiceData.words.length, 'words');
             result.pronunciation.words = voiceData.words.map((vw, index) => {
                 // Try to find the corresponding word in the GPT response
                 // If GPT returned an array of the same length, we use index. 
