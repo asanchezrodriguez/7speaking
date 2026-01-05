@@ -158,14 +158,14 @@ export const copy = {
     },
 
     progressSteps: {
-        languageSelection: 'Eligiendo tu idioma',
-        knowingWhatYouWant: 'Conociendo lo que quieres',
-        knowingWhatYouHave: 'Conociendo lo que tienes',
-        understandingYourProfile: 'Entendiendo tu perfil',
-        discoveringYourPath: 'Descubriendo tu camino',
-        buildingYourPlan: 'Construyendo tu plan',
-        showingTheSolution: 'Mostrándote la solución',
-        takingAction: 'Tomando acción',
+        languageSelection: { full: 'Eligiendo tu idioma', short: 'Idioma' },
+        knowingWhatYouWant: { full: 'Conociendo lo que quieres', short: 'Propósito' },
+        knowingWhatYouHave: { full: 'Conociendo lo que tienes', short: 'Nivel' },
+        understandingYourProfile: { full: 'Entendiendo tu perfil', short: 'Perfil' },
+        discoveringYourPath: { full: 'Descubriendo tu camino', short: 'Ruta' },
+        buildingYourPlan: { full: 'Construyendo tu plan', short: 'Plan' },
+        showingTheSolution: { full: 'Mostrándote la solución', short: 'Solución' },
+        takingAction: { full: 'Tomando acción', short: 'Acción' },
     },
 
     contactModal: {
@@ -173,4 +173,19 @@ export const copy = {
         subtitle: 'Cuéntanos sobre tu proyecto y te responderemos pronto',
         submitButton: 'Enviar mensaje',
     },
+
+    infoSections: {
+        about: {
+            title: 'Quiénes Somos',
+            content: 'Intelixs es el Partner Oficial y Exclusivo de 7Speaking para LATAM, USA, Brasil y Canadá. Nos dedicamos a transformar la enseñanza de idiomas a través de la inteligencia artificial y el contenido real. Creemos que el dominio de un idioma no es solo una habilidad académica, sino una herramienta fundamental para el éxito profesional en un mundo globalizado. Con más de 82,000 cursos impartidos anualmente y un 97.8% de satisfacción, nuestro compromiso es ofrecerte el método más eficiente y personalizado del mercado.',
+        },
+        universities: {
+            title: 'Para Universidades',
+            content: 'Impulsa el bilingüismo en tu campus con 7Speaking. Ofrecemos integración nativa con LMS (Moodle, Canvas, Blackboard), analítica accionable para acreditaciones y rutas por facultades (Ingeniería, Negocios, Salud). Ayudamos a las instituciones a cumplir con normativas de bilingüismo mediante trayectorias adaptativas y evidencias verificables de progreso.',
+        },
+        companies: {
+            title: 'Para Empresas',
+            content: 'Potencia el talento de tu organización con formación lingüística de alto impacto. Desde Customer Experience y Call Centers hasta equipos profesionales y operaciones. Ofrecemos lecciones "on-the-go", integración con tu IdP (SSO) y contenidos específicos por sector para mejorar el engagement y la retención de talento.',
+        }
+    }
 } as const;

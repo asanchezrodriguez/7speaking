@@ -23,11 +23,11 @@ function App() {
   const { currentScreen, inputMode } = useFlowStore();
 
   // Map screens to JTBD progress steps
-  const getProgressStep = (): string | undefined => {
+  const getProgressStep = (): { full: string; short: string } | string | undefined => {
     // Hidden on landing screen
     if (currentScreen === 13) return undefined;
 
-    const stepMap: Record<number, string> = {
+    const stepMap: Record<number, { full: string; short: string } | string> = {
       1: copy.progressSteps.languageSelection,
       2: copy.progressSteps.knowingWhatYouWant,
       3: copy.progressSteps.knowingWhatYouWant,

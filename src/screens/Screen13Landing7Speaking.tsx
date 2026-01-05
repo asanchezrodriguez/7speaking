@@ -19,7 +19,7 @@ export const Screen13Landing7Speaking: React.FC = () => {
         <div className="space-y-12 max-w-5xl mx-auto pb-12">
             {/* Hero Section */}
             <section className="text-center space-y-6">
-                <h1 className="text-4xl md:text-6xl font-bold leading-tight bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-transparent">
+                <h1 className="text-4xl md:text-6xl font-bold leading-[1.2] pb-2 bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-transparent">
                     La Experiencia 7Speaking
                 </h1>
                 <p className="text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
