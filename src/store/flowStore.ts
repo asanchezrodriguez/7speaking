@@ -36,6 +36,7 @@ interface FlowState {
         assessments: number;
         assistantMessages: number;
     };
+    lastUsageReset: string; // ISO string
 
     // Actions
     setScreen: (screen: number) => void;
@@ -53,6 +54,7 @@ interface FlowState {
 
     // Usage Actions
     incrementUsage: (type: 'recordings' | 'assessments' | 'assistantMessages') => void;
+    checkAndResetUsage: () => void;
     reset: () => void;
 }
 
@@ -82,6 +84,7 @@ export const useFlowStore = create<FlowState>()(
                 assessments: 0,
                 assistantMessages: 0,
             },
+            lastUsageReset: new Date().toISOString(),
 
             // Actions
             setScreen: (screen) => set({ currentScreen: screen }),
@@ -110,12 +113,45 @@ export const useFlowStore = create<FlowState>()(
 
             setEmail: (email) => set({ email }),
 
-            incrementUsage: (type) => set((state) => ({
-                usage: {
-                    ...state.usage,
-                    [type]: state.usage[type] + 1
+            incrementUsage: (type) => set((state) => {
+                // Determine limits
+                const limits = {
+                    recordings: 3,
+                    assessments: 3,
+                    assistantMessages: 10
+                };
+
+                if (state.usage[type] >= limits[type]) {
+                    console.warn(`Limit reached for ${type}`);
+                    return state; // Hard stop
                 }
-            })),
+
+                return {
+                    usage: {
+                        ...state.usage,
+                        [type]: state.usage[type] + 1
+                    }
+                };
+            }),
+
+            checkAndResetUsage: () => set((state) => {
+                const now = new Date();
+                const lastReset = new Date(state.lastUsageReset);
+                const diffMs = now.getTime() - lastReset.getTime();
+                const hoursSinceReset = diffMs / (1000 * 60 * 60);
+
+                if (hoursSinceReset >= 24) {
+                    return {
+                        usage: {
+                            recordings: 0,
+                            assessments: 0,
+                            assistantMessages: 0,
+                        },
+                        lastUsageReset: now.toISOString()
+                    };
+                }
+                return state;
+            }),
 
             reset: () => set({
                 currentScreen: 0,
@@ -136,6 +172,7 @@ export const useFlowStore = create<FlowState>()(
                     assessments: 0,
                     assistantMessages: 0,
                 },
+                lastUsageReset: new Date().toISOString(),
             }),
         }),
         {
@@ -152,7 +189,13 @@ export const useFlowStore = create<FlowState>()(
                 inputMode: state.inputMode,
                 transcript: state.transcript,
                 analysisResult: state.analysisResult,
+                lastUsageReset: state.lastUsageReset,
             }),
+            onRehydrateStorage: () => (state) => {
+                if (state) {
+                    state.checkAndResetUsage();
+                }
+            },
         }
     )
 );

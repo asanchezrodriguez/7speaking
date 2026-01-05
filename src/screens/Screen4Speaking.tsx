@@ -20,7 +20,13 @@ export const Screen4Speaking: React.FC = () => {
 
     const recorderRef = useRef<VoiceRecorder | null>(null);
     const whisperService = useRef(new AzureWhisperService());
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<any>(null);
+
+    useEffect(() => {
+        if (timeLeft === 0 && isRecording) {
+            handleStop('timeout');
+        }
+    }, [timeLeft, isRecording]);
 
     useEffect(() => {
         // Initialize recorder
@@ -53,9 +59,8 @@ export const Screen4Speaking: React.FC = () => {
                 // Start timer
                 timerRef.current = setInterval(() => {
                     setTimeLeft((prev: number) => {
-                        if (prev <= 1) {
+                        if (prev <= 0) {
                             if (timerRef.current) clearInterval(timerRef.current);
-                            handleStop('timeout');
                             return 0;
                         }
                         return prev - 1;
@@ -151,18 +156,23 @@ export const Screen4Speaking: React.FC = () => {
     if (recordingLimitReached) {
         return (
             <div className="flex flex-col items-center justify-center space-y-6 py-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
                     <MicOff size={32} />
                 </div>
                 <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-white">Límite de grabaciones alcanzado</h2>
-                    <p className="text-neutral-400 max-w-sm">
-                        Has superado el número máximo de intentos de grabación permitidos en esta sesión para proteger la calidad del servicio.
+                    <h2 className="text-2xl font-bold text-white tracking-tight">Acceso Temporalmente Limitado</h2>
+                    <p className="text-neutral-400 max-w-sm mx-auto">
+                        Has superado el número máximo de intentos de grabación permitidos (3). Para garantizar la calidad, esta función se habilitará nuevamente en 24 horas.
                     </p>
                 </div>
-                <Button onClick={() => setInputMode('typing')}>
-                    Usar modo texto en su lugar
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <Button variant="secondary" onClick={() => setInputMode('typing')}>
+                        Intentar con modo texto
+                    </Button>
+                    <Button variant="primary" onClick={() => window.open('https://shop.intelixs.com', '_blank')}>
+                        Ver planes 7Speaking
+                    </Button>
+                </div>
             </div>
         );
     }
@@ -190,7 +200,8 @@ export const Screen4Speaking: React.FC = () => {
         <div className="text-center space-y-8 max-w-2xl mx-auto">
             {/* Timer */}
             <div className="space-y-4">
-                <div className="text-6xl md:text-7xl font-bold text-intelixs-blue-500 tabular-nums">
+                <div className={`text-6xl md:text-7xl font-bold tabular-nums transition-colors duration-300 ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-intelixs-blue-500'
+                    }`}>
                     {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
                 </div>
                 <p className="text-lg text-neutral-300">

@@ -22,8 +22,16 @@ export interface AnalysisResult {
     estimatedLevel: CEFRLevel;
     percentile: number; // Percentile ranking (0-100)
     insights: {
-        strength: string;
-        blocker: string;
+        strength: {
+            title: string;
+            content: string;
+            category: 'grammar' | 'fluency' | 'vocabulary' | 'confidence' | 'pronunciation';
+        };
+        blocker: {
+            title: string;
+            content: string;
+            category: 'grammar' | 'fluency' | 'vocabulary' | 'confidence' | 'pronunciation';
+        };
         learningStyle: string;
     };
     pronunciation?: {

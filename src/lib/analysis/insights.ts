@@ -1,8 +1,16 @@
 import type { CEFRLevel, AnalysisMetrics } from './types';
 
 interface Insights {
-    strength: string;
-    blocker: string;
+    strength: {
+        title: string;
+        content: string;
+        category: 'grammar' | 'fluency' | 'vocabulary' | 'confidence' | 'pronunciation';
+    };
+    blocker: {
+        title: string;
+        content: string;
+        category: 'grammar' | 'fluency' | 'vocabulary' | 'confidence' | 'pronunciation';
+    };
     learningStyle: string;
 }
 
@@ -11,27 +19,41 @@ export function generateInsights(
     metrics: AnalysisMetrics
 ): Insights {
     // Determine strength based on best metric
-    let strength = 'Comprensión de ideas y contexto';
+    let strengthTitle = 'Comprensión Lectora';
+    let strengthContent = 'Demuestras una buena capacidad para entender el contexto y las ideas principales.';
+    let strengthCategory: 'grammar' | 'fluency' | 'vocabulary' | 'confidence' | 'pronunciation' = 'confidence';
 
     if (metrics.lexicalDiversity > 0.6) {
-        strength = 'Vocabulario variado y expresivo';
+        strengthTitle = 'Riqueza de Vocabulario';
+        strengthContent = 'Tu uso de términos específicos y variados permite una comunicación más precisa.';
+        strengthCategory = 'vocabulary';
     } else if (metrics.connectorScore > 0.06) {
-        strength = 'Estructura y organización del discurso';
+        strengthTitle = 'Estructura Lógica';
+        strengthContent = 'Organizas tus ideas de forma coherente, facilitando el seguimiento de tu discurso.';
+        strengthCategory = 'grammar';
     } else if (metrics.wpm > 100) {
-        strength = 'Fluidez al expresar ideas';
+        strengthTitle = 'Fluidez Natural';
+        strengthContent = 'Mantienes un ritmo constante que facilita la interacción espontánea.';
+        strengthCategory = 'fluency';
     }
 
     // Determine blocker based on weakest metric
-    let blocker = 'Confianza al hablar bajo presión real';
+    let blockerTitle = 'Barreras de Confianza';
+    let blockerContent = 'La duda al hablar limita tu capacidad para expresar ideas más abstractas.';
+    let blockerCategory: 'grammar' | 'fluency' | 'vocabulary' | 'confidence' | 'pronunciation' = 'confidence';
 
     if (metrics.pauseRatio > 0.15) {
-        blocker = 'Vacilación y pausas frecuentes';
+        blockerTitle = 'Pausas Frequentadas';
+        blockerContent = 'Las interrupciones en el flujo de voz afectan la claridad de tu mensaje.';
+        blockerCategory = 'fluency';
     } else if (metrics.lexicalDiversity < 0.4) {
-        blocker = 'Rango limitado de vocabulario';
+        blockerTitle = 'Vocabulario Limitado';
+        blockerContent = 'Dependes de palabras básicas, lo que impide profundizar en temas complejos.';
+        blockerCategory = 'vocabulary';
     } else if (metrics.avgSentenceLength < 8) {
-        blocker = 'Construcción de oraciones complejas';
-    } else if (metrics.wpm < 70) {
-        blocker = 'Velocidad y automatización del habla';
+        blockerTitle = 'Longitud de Oración';
+        blockerContent = 'Tus frases cortas limitan la sofisticación de tu comunicación.';
+        blockerCategory = 'grammar';
     }
 
     // Determine learning style based on level and metrics
@@ -46,8 +68,16 @@ export function generateInsights(
     }
 
     return {
-        strength,
-        blocker,
+        strength: {
+            title: strengthTitle,
+            content: strengthContent,
+            category: strengthCategory
+        },
+        blocker: {
+            title: blockerTitle,
+            content: blockerContent,
+            category: blockerCategory
+        },
         learningStyle,
     };
 }

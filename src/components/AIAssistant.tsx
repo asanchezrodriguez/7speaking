@@ -38,17 +38,31 @@ export const AIAssistant: React.FC = () => {
             const response = await getAssistantResponse([...messages, userMessage], selectedLanguage);
             setMessages(prev => [...prev, { role: 'assistant', content: response }]);
             incrementUsage('assistantMessages');
-
-            if (usage.assistantMessages + 1 >= 10) {
-                setLimitReached(true);
-                setMessages(prev => [...prev, { role: 'assistant', content: 'Has alcanzado el límite de mensajes permitidos para esta sesión de consulta rápida. Si necesitas más ayuda, por favor usa el botón de contacto.' }]);
-            }
         } catch (error) {
             setMessages(prev => [...prev, { role: 'assistant', content: 'Lo siento, hubo un error técnico. Por favor intenta de nuevo.' }]);
         } finally {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        const isLimitReached = usage.assistantMessages >= 10;
+        setLimitReached(isLimitReached);
+
+        // Only append the message if the limit was actually hit just now
+        // and we don't already have a limit message as the last message.
+        if (isLimitReached) {
+            const lastMessage = messages[messages.length - 1];
+            const alreadyNotified = lastMessage?.role === 'assistant' && lastMessage.content.includes('límite');
+
+            if (!alreadyNotified) {
+                setMessages(prev => [...prev, {
+                    role: 'assistant',
+                    content: 'Has alcanzado el límite de mensajes permitidos para esta sesión de consulta rápida. Para proteger la calidad de nuestro servicio IA, las consultas se habilitan cada 24 horas. Si necesitas más ayuda ahora, por favor usa el botón de contacto.'
+                }]);
+            }
+        }
+    }, [usage.assistantMessages]);
 
     return (
         <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">

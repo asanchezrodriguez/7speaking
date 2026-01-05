@@ -63,10 +63,18 @@ export const Screen4Typing: React.FC = () => {
                 )}
 
                 {limitReached && (
-                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-center">
-                        <p className="text-red-400 text-sm">
-                            Has alcanzado el límite de evaluaciones permitidas en esta sesión.
+                    <div className="p-6 bg-red-500/10 border border-red-500/20 rounded-xl text-center space-y-3 shadow-[0_4px_20px_rgba(239,68,68,0.1)]">
+                        <p className="text-red-400 font-medium">
+                            Límite de Evaluaciones alcanzado (3/3)
                         </p>
+                        <p className="text-neutral-400 text-sm">
+                            Esta función se activará nuevamente en 24 horas. Puedes continuar explorando nuestros planes de suscripción para acceso ilimitado.
+                        </p>
+                        <div className="pt-2">
+                            <Button variant="secondary" onClick={() => window.open('https://shop.intelixs.com', '_blank')}>
+                                Ver Planes Oficiales
+                            </Button>
+                        </div>
                     </div>
                 )}
             </div>
