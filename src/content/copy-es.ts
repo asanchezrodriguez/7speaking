@@ -142,7 +142,7 @@ export const copy = {
     },
 
     screen12: {
-        statement: 'Intelixs es el Partner Oficial y Exclusivo de 7Speaking para LATAM, USA, Brasil y Canadá.',
+        statement: 'Intelixs es el Partner Oficial y de 7Speaking para LATAM, USA, Brasil y Canadá.',
         links: [
             { label: 'Sobre Intelixs', href: '#' },
             { label: 'Cómo funciona', href: '#' },
@@ -177,7 +177,7 @@ export const copy = {
     infoSections: {
         about: {
             title: 'Quiénes Somos',
-            content: 'Intelixs es el Partner Oficial y Exclusivo de 7Speaking para LATAM, USA, Brasil y Canadá. Nos dedicamos a transformar la enseñanza de idiomas a través de la inteligencia artificial y el contenido real. Creemos que el dominio de un idioma no es solo una habilidad académica, sino una herramienta fundamental para el éxito profesional en un mundo globalizado. Con más de 82,000 cursos impartidos anualmente y un 97.8% de satisfacción, nuestro compromiso es ofrecerte el método más eficiente y personalizado del mercado.',
+            content: 'Intelixs es el Partner Oficial de 7Speaking para LATAM, USA, Brasil y Canadá. Nos dedicamos a transformar la enseñanza de idiomas a través de la inteligencia artificial y el contenido real. Creemos que el dominio de un idioma no es solo una habilidad académica, sino una herramienta fundamental para el éxito profesional en un mundo globalizado. Con más de 82,000 cursos impartidos anualmente y un 97.8% de satisfacción, nuestro compromiso es ofrecerte el método más eficiente y personalizado del mercado.',
         },
         universities: {
             title: 'Para Universidades',
