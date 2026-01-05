@@ -6,7 +6,7 @@ import { getAssistantResponse } from '../lib/analysis/assistantLogic';
 import type { AssistantMessage } from '../lib/analysis/assistantLogic';
 
 export const AIAssistant: React.FC = () => {
-    const { usage, incrementUsage } = useFlowStore();
+    const { usage, incrementUsage, selectedLanguage } = useFlowStore();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<AssistantMessage[]>([
         { role: 'assistant', content: '¡Hola! Soy tu Asistente IA de Intelixs. ¿En qué puedo ayudarte hoy sobre tu experiencia con 7Speaking o nuestra tienda?' }
@@ -35,7 +35,7 @@ export const AIAssistant: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await getAssistantResponse([...messages, userMessage]);
+            const response = await getAssistantResponse([...messages, userMessage], selectedLanguage);
             setMessages(prev => [...prev, { role: 'assistant', content: response }]);
             incrementUsage('assistantMessages');
 

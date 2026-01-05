@@ -6,7 +6,7 @@ import { config } from '../config';
 import { analytics } from '../lib/analytics/tracker';
 
 export const Screen4Typing: React.FC = () => {
-    const { nextScreen, setTranscript, usage } = useFlowStore();
+    const { nextScreen, setTranscript, usage, selectedLanguage } = useFlowStore();
     const [text, setText] = useState('');
     const [showWarning, setShowWarning] = useState(false);
     const limitReached = usage.assessments >= 3;
@@ -31,7 +31,7 @@ export const Screen4Typing: React.FC = () => {
         <div className="space-y-6 max-w-2xl mx-auto">
             <div className="text-center space-y-2">
                 <h2 className="text-3xl md:text-4xl font-semibold">
-                    {copy.screen4Typing.headline}
+                    {copy.screen4Typing.headline.replace('{language}', selectedLanguage.toLowerCase())}
                 </h2>
             </div>
 
@@ -42,7 +42,7 @@ export const Screen4Typing: React.FC = () => {
                         setText(e.target.value);
                         setShowWarning(false);
                     }}
-                    placeholder={copy.screen4Typing.placeholder}
+                    placeholder={copy.screen4Typing.placeholder.replaceAll('{language}', selectedLanguage.toLowerCase())}
                     className="w-full h-64 px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-intelixs-blue-500 focus:border-transparent resize-none"
                     autoFocus
                 />

@@ -58,8 +58,8 @@ export const copy = {
     },
 
     screen4Typing: {
-        headline: 'Cuéntanos qué quieres lograr con el inglés',
-        placeholder: 'Escribe aquí en inglés con naturalidad, como si estuvieras hablando con un amigo. Mínimo 30 palabras.',
+        headline: 'Cuéntanos qué quieres lograr con el {language}',
+        placeholder: 'Escribe aquí en {language} con naturalidad, como si estuvieras hablando con un amigo. Mínimo 30 palabras.',
         continueButton: 'Continuar',
         minWordsWarning: 'Por favor escribe al menos 30 palabras para un análisis más preciso.',
     },

@@ -39,12 +39,14 @@ export interface AssistantMessage {
     content: string;
 }
 
-export async function getAssistantResponse(messages: AssistantMessage[]): Promise<string> {
+export async function getAssistantResponse(messages: AssistantMessage[], selectedLanguage: string = 'inglés'): Promise<string> {
+    const systemPromptWithContext = `${SYSTEM_PROMPT}\n\nCURRENT CONTEXT:\n- The user is currently being assessed in: ${selectedLanguage}. Help them with questions related to learning this specific language.`;
+
     try {
         const response = await client.chat.completions.create({
             model: import.meta.env.VITE_AZURE_OPENAI_DEPLOYMENT || 'gpt-4o',
             messages: [
-                { role: 'system', content: SYSTEM_PROMPT },
+                { role: 'system', content: systemPromptWithContext },
                 ...messages
             ],
             temperature: 0.7,

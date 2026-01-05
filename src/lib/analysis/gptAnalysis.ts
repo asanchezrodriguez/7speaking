@@ -56,7 +56,13 @@ Evaluate the voice delivery:
 
     const prompt = `You are an expert language assessment AI specialized in evaluating second language proficiency. You are warm, encouraging, and honest.
 
-Analyze the following text written/spoken by a learner of ${targetLanguage} as a second language. ${voiceContext}
+Analyze the following text written/spoken by a learner of ${targetLanguage} as their target second language. ${voiceContext}
+
+CONTEXT & PERFORMANCE GUIDELINES:
+- The learner is being assessed in ${targetLanguage}.
+- If the learner has poor knowledge of ${targetLanguage}, they might have used some Spanish (their native language) to fill gaps. This is called "interlanguage".
+- If the text is primarily in Spanish but intended for ${targetLanguage} assessment, evaluate it as a very beginner level (A1) in ${targetLanguage}.
+- Focus your evaluation on their proficiency in ${targetLanguage} (vocabulary, grammar, and syntax of THAT specific language).
 
 SECURITY & PURPOSE GUARDRAILS:
 - ONLY analyze content related to language learning, professional communication, or daily life conversations.
@@ -126,11 +132,11 @@ ASSESSMENT CRITERIA:
 
 IMPORTANT:
 - Respond ONLY with valid JSON
-- All text fields must be in Spanish
+- All explanatory text fields (strength, blocker, learningStyle, personalMessage, blueprint) MUST be in Spanish
 - Be specific and actionable
 - Make blueprint items PERSONALIZED to this specific learner's text, not generic advice
 - Keep each field concise (max words as specified)
-- Percentile should reflect realistic distribution among language learners
+- Percentile should reflect realistic distribution among language learners of ${targetLanguage}
 - For "words" in pronunciation, use the actual word list provided and preserve their timestamps.`;
 
     try {

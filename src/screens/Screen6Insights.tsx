@@ -18,8 +18,7 @@ export const Screen6Insights: React.FC = () => {
 
     const { insights, percentile, personalMessage, pronunciation } = analysisResult;
 
-    // Get language name from selected language
-    const languageName = selectedLanguage || 'inglés';
+    const languageName = (selectedLanguage || 'inglés').toLowerCase();
 
     return (
         <div className="space-y-8 max-w-3xl mx-auto pb-12">

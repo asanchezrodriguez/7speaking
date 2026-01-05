@@ -34,10 +34,9 @@ export const Screen5Processing: React.FC = () => {
 
         const processAnalysis = async () => {
             try {
-                // Use GPT-4o for analysis
                 const gptResult = await analyzeWithGPT(
                     transcript,
-                    selectedLanguage || 'inglés',
+                    selectedLanguage,
                     voiceData || undefined
                 );
 
