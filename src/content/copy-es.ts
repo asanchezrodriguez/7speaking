@@ -123,11 +123,11 @@ export const copy = {
     },
 
     screen10: {
-        headline: 'Continúa con un programa personalizado de 12 meses',
-        body: 'Según tu perfil, el programa se adapta a tu nivel, tus metas y tu ritmo — para que cada sesión te acerque a resultados.',
-        primaryCta: 'Continuar con 7Speaking',
+        headline: 'Mejora tu nivel con el programa oficial de 7Speaking',
+        body: 'Como partner oficial, te ofrecemos acceso exclusivo a la plataforma líder. El programa se adapta a tu perfil, tus metas y tu ritmo para garantizar resultados reales.',
+        primaryCta: 'Comprar suscripción oficial',
         secondaryCta: 'Enviarme mis resultados por email',
-        microcopy: 'Pago seguro • Acceso inmediato • Cancela cuando quieras',
+        microcopy: 'Compra 100% segura • Partner Oficial • Activación inmediata',
         emailPlaceholder: 'tu@email.com',
         emailSubmitted: '¡Gracias! Te enviaremos tus resultados pronto.',
     },
@@ -142,7 +142,7 @@ export const copy = {
     },
 
     screen12: {
-        statement: 'Intelixs es el partner oficial de 7Speaking para LATAM, USA, Brasil y Canadá.',
+        statement: 'Intelixs es el Partner Oficial y Exclusivo de 7Speaking para LATAM, USA, Brasil y Canadá.',
         links: [
             { label: 'Sobre Intelixs', href: '#' },
             { label: 'Cómo funciona', href: '#' },
